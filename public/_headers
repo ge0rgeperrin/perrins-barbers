@@ -1,0 +1,8 @@
+# Cloudflare's asset store reads this and does not serve the file itself.
+# `expo export` copies public/ into dist/client, which is the assets directory
+# in wrangler.toml.
+#
+# Everything under _expo/static has its content hash in the name, so it can
+# never go stale. HTML gets the opposite header, set in worker/index.mjs.
+/_expo/static/*
+  Cache-Control: public, max-age=31536000, immutable

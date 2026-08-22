@@ -1,5 +1,5 @@
 /**
- * Serves the production build the way Netlify will.
+ * Serves the production build the way Cloudflare will.
  *
  *   npm run build:web && npm run serve
  *
@@ -8,9 +8,9 @@
  * demand, it has no pre-rendered HTML and it does not care whether the API
  * routes survived being exported. This runs the actual files that get uploaded.
  *
- * Static files come off disk from dist/client, exactly as Netlify's CDN will
- * serve them, and anything left over goes to the Expo request handler, which is
- * what the Netlify function does. If booking works here it will work there.
+ * Static files come off disk from dist/client, exactly as Cloudflare's asset store
+ * will serve them, and anything left over goes to the Expo request handler, which
+ * is what the Worker does. If booking works here it will work there.
  */
 import { createReadStream, existsSync, statSync } from 'node:fs';
 import { createServer } from 'node:http';
@@ -22,7 +22,7 @@ import path from 'node:path';
  *
  * expo-server's ESM build uses extensionless relative imports ('./abstract'),
  * which every bundler resolves and Node's own ESM loader refuses. Bundled code
- * is fine, which is why the Netlify function can import it normally, but plain
+ * is fine, which is why the Worker can import it normally, but plain
  * Node cannot. Its CommonJS build has the same API and resolves.
  */
 const require = createRequire(import.meta.url);

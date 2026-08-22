@@ -1,0 +1,54 @@
+# Cloudflare Workers build and routing. See DEPLOY.md for the whole runbook.
+
+name = "perrins-barbers"
+
+# Written by scripts/copy-worker.mjs, which is why the build command is
+# `npm run build:cf` and not `expo export` on its own. The entry has to live
+# inside base_dir for its `./server/...` imports to resolve.
+main = "dist/index.mjs"
+base_dir = "dist"
+
+# Two things depend on this date, both silently:
+#   - from 2025-04-01, nodejs_compat fills process.env from the vars and
+#     secrets below. server/seal.ts reads process.env.BOOKING_SECRET, so an
+#     older date makes the secret invisible and booking dies.
+#   - nodejs_compat itself is what provides node:crypto and node:async_hooks,
+#     which seal.ts and the adapter need.
+compatibility_date = "2025-11-01"
+compatibility_flags = ["nodejs_compat"]
+
+# The adapter reads dist/server with `await import('./server/<name>')`. Wrangler
+# cannot see through that specifier, so without this nothing under dist/server
+# is shipped and every request 500s.
+find_additional_modules = true
+
+[vars]
+# Deliberate. server/seal.ts only *refuses to run* on a missing or short
+# BOOKING_SECRET when NODE_ENV is production; otherwise it falls back to a
+# hardcoded development key. Without this var a misconfigured deploy would take
+# real bookings signed with a guessable one.
+NODE_ENV = "production"
+
+# The JS bundle, the fonts, og.jpg, robots.txt, sitemap.xml. Served from the
+# edge before the Worker runs, which is both free and what we want: a page load
+# never touches the Worker. Cache headers for these live in public/_headers.
+[assets]
+directory = "./dist/client"
+
+# CommonJS, not ESModule, and this is not a style choice. Metro's server bundles
+# end in `module.exports = __r(...)` and reach Node built-ins through
+# `$$require_external = typeof require !== 'undefined' ? e => require(e) : () => null`.
+# Loaded as an ES module there is no `require`, so that quietly returns null,
+# node:crypto in server/seal.ts becomes null, and booking fails at runtime with
+# an error that points nowhere near here. Everything else keeps working.
+[[rules]]
+type = "CommonJS"
+globs = ["server/**/*.js"]
+
+# Text, not Data. The adapter's readJson checks for a string beginning with `{`
+# and parses it; an ArrayBuffer would fall through as a null manifest and every
+# route would 404.
+[[rules]]
+type = "Text"
+fallthrough = false
+globs = ["server/**/*.html", "server/_expo/routes.json"]

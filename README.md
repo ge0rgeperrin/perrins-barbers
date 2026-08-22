@@ -61,17 +61,19 @@ npm run check:dashes  # refuse any long dash a customer could read
 npm run web       # dev server, API routes included, at http://localhost:8081
 npm run ios       # or: npm run android
 npm run build:web # server export into dist/
+npm run build:cf  # that, plus the Worker entry, ready for wrangler deploy
 npm run serve     # run that export the way the host will, at :8081
 ```
 
 The web target is `output: "server"`, because the booking proxy needs somewhere
 to run. Pages are still pre-rendered at build time, so SEO is unaffected.
 
-**Deployment: Netlify, at perrinsbarbers.co.uk. [DEPLOY.md](DEPLOY.md) is the
-runbook**, including the two 123 Reg DNS records and the environment variables.
-`netlify.toml` and `netlify/functions/server.mjs` are committed and need no
-editing. `expo-server` ships adapters for Express, plain Node, Netlify, Vercel,
-Cloudflare Workers, Bun and EAS, so moving host later is a new function file and
+**Deployment: Cloudflare Workers, at perrinsbarbers.co.uk. [DEPLOY.md](DEPLOY.md)
+is the runbook**, including the nameserver change at 123 Reg and the two
+variables. `wrangler.toml` and `worker/index.mjs` are committed and need no
+editing; the module rules in `wrangler.toml` are load-bearing and commented
+there. `expo-server` ships adapters for Express, plain Node, Netlify, Vercel,
+Cloudflare Workers, Bun and EAS, so moving host later is a new entry file and
 nothing else.
 
 `npm run serve` matters more than it looks: it runs the exported `dist/` through

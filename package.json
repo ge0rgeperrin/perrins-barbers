@@ -9,9 +9,10 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "build:web": "expo export --platform web",
+    "build:cf": "npm run build:web && node scripts/copy-worker.mjs",
     "serve": "node scripts/serve.mjs",
     "sync": "node scripts/sync-services.mjs",
-    "test": "node --test scripts/sync-services.test.mjs lib/hours.test.ts lib/calendar.test.ts lib/services.test.ts server/booking.test.ts netlify/functions/server.test.mjs",
+    "test": "node --test scripts/sync-services.test.mjs lib/hours.test.ts lib/calendar.test.ts lib/services.test.ts server/booking.test.ts worker/config.test.mjs",
     "canary": "node scripts/canary-booking.mjs",
     "fixture": "node scripts/save-fixture.mjs",
     "icons": "node scripts/make-icons.mjs",
@@ -46,6 +47,7 @@
     "react-native-web": "^0.21.2"
   },
   "devDependencies": {
-    "typescript": "~5.9.2"
+    "typescript": "~5.9.2",
+    "wrangler": "^4.42.0"
   }
 }

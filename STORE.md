@@ -13,7 +13,7 @@ this** needs a human with a card and the shop's details.
 | Thing | Status |
 | --- | --- |
 | A real domain with HTTPS | **You**, the app's booking calls go to `perrinsbarbers.co.uk`. Both stores reject an app pointing at localhost |
-| Hosting that runs server code | **You**, the booking proxy is server-side. Vercel, Netlify or Cloudflare all run an Expo `output: "server"` build |
+| Hosting that runs server code | **You**, the booking proxy is server-side. Cloudflare Workers runs the Expo `output: "server"` build |
 | `BOOKING_SECRET` set in the host's environment | **You**, 32+ random characters. The server refuses to start in production without it |
 | `EXPO_PUBLIC_SITE_URL` set for native builds | **You**, the phone has to be told where the site is |
 | Privacy policy on a public URL | **In the build**, `/privacy`, reachable in the app from Visit → The small print |
