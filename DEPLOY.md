@@ -244,11 +244,11 @@ nothing to do with the real secret in Cloudflare.
 > point is not something to do unasked. Before you tell anyone the site is open:
 > make one booking through it, check it appears in Schedulista, then cancel it.
 >
-> **`hello@perrinsbarbers.co.uk` is in the footer and in the privacy policy, and
-> nobody has created it yet.** It is the address a customer uses to ask what
-> data the shop holds. Either set the mailbox up at 123 Reg, or change
-> `business.email` in `content/content.json` to an address that is actually read.
-> If you do set it up, remember its MX records have to live in Cloudflare's DNS
-> now, not 123 Reg's.
+> **The shop has no email address on the site.** There is no mailbox on this
+> domain, so rather than print one nobody reads, the footer offers Instagram
+> and Facebook and the legal documents point at the telephone number. If a
+> mailbox is ever set up, its MX records have to live in Cloudflare's DNS now,
+> not 123 Reg's, and `business.email` goes back into `content/content.json`
+> alongside the `{email}` placeholder in `content/legal.json`.
 
 ---

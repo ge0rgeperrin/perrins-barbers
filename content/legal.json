@@ -1,5 +1,5 @@
 {
-  "_readme": "The privacy policy and the terms, in plain text the owners can edit. {name}, {phone}, {email} and {address} are filled in from business in content.json, so contact details never have to be changed twice. Update \"updated\" whenever you change anything here.",
+  "_readme": "The privacy policy and the terms, in plain text the owners can edit. {name}, {phone} and {address} are filled in from business in content.json, so contact details never have to be changed twice. Update \"updated\" whenever you change anything here.",
   "_reviewNote": "This was written to describe exactly what the app and website actually do. Nothing aspirational, nothing copied from another shop. If you change how bookings work, change this too. Have a solicitor read it before launch if you want to be certain; it is accurate, but it is not legal advice.",
 
   "updated": "22 August 2026",
@@ -11,7 +11,7 @@
       {
         "heading": "Who we are",
         "body": [
-          "{name}, {address}. We are the data controller for anything described here. Ring {phone} or email {email} with any question about your information."
+          "{name}, {address}. We are the data controller for anything described here. Ring {phone} with any question about your information."
         ]
       },
       {
@@ -84,7 +84,7 @@
       {
         "heading": "Your rights",
         "body": [
-          "Under UK data protection law you can ask to see what is held about you, have it corrected, have it deleted, or object to it being held. Ring {phone} or email {email} and the shop will sort it out. Because the appointment itself lives in Schedulista's system, deleting an appointment record may mean asking them as well, and the shop will do that for you.",
+          "Under UK data protection law you can ask to see what is held about you, have it corrected, have it deleted, or object to it being held. Ring {phone} and the shop will sort it out. Because the appointment itself lives in Schedulista's system, deleting an appointment record may mean asking them as well, and the shop will do that for you.",
           "If you are not happy with how we handle it you can complain to the Information Commissioner's Office at ico.org.uk."
         ]
       },
@@ -165,7 +165,7 @@
       {
         "heading": "Contact",
         "body": [
-          "{name}, {address}. Telephone {phone}. Email {email}."
+          "{name}, {address}. Telephone {phone}."
         ]
       }
     ]

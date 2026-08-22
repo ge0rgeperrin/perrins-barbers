@@ -273,13 +273,12 @@ function Find() {
 }
 
 /* ------------------------------------------------------------------ */
-/* footer: the three ways to reach the shop                             */
+/* footer: the two ways to reach the shop online                       */
 /* ------------------------------------------------------------------ */
 
 const SOCIAL = [
   { icon: 'instagram', name: 'Instagram', href: () => business.instagram },
   { icon: 'facebook', name: 'Facebook', href: () => business.facebook },
-  { icon: 'mail', name: 'Email', href: () => `mailto:${business.email}` },
 ] as const;
 
 function Footer() {

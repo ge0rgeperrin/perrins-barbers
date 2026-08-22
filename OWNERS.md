@@ -173,7 +173,7 @@ In `content/content.json`, under `business`:
   paragraph. Do not name the barbers in it. The line further down that says who
   is in the chairs is written from Schedulista, so it is always right without
   anyone remembering to change it.
-- **`phone`**, **`phoneHref`**, **`email`**, **`address`** change in one place
+- **`phone`**, **`phoneHref`**, **`address`** change in one place
   and change everywhere, including in the privacy policy and the terms.
 
 If you change the phone number, change **both** `phone` (what people read) and
@@ -209,7 +209,7 @@ npm run check:dashes
 ```
 
 Add, remove or reword sections freely. Four things are filled in for you and
-should be left as they are: `{name}`, `{phone}`, `{email}`, `{address}` and
+should be left as they are: `{name}`, `{phone}`, `{address}` and
 `{monthsAhead}`. They pick up whatever is in `content.json`, so the policy can
 never quote a phone number or a booking window that changed somewhere else.
 

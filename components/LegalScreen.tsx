@@ -24,7 +24,6 @@ export type LegalDoc = {
 const FIELDS: Record<string, string> = {
   '{name}': business.name,
   '{phone}': business.phone,
-  '{email}': business.email,
   '{address}': addressLine,
   '{monthsAhead}': `${countWord(booking.monthsAhead)} month${booking.monthsAhead === 1 ? '' : 's'}`,
 };

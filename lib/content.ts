@@ -18,7 +18,6 @@ export type Business = {
   about: string;
   phone: string;
   phoneHref: string;
-  email: string;
   address: string[];
   mapsUrl: string;
   instagram: string;
