@@ -91,6 +91,23 @@ quietly rather than loudly.
 visited, which is why it is a build variable rather than a Worker one. After
 changing it, redeploy.
 
+**Saving a secret is not the same as deploying it.** Cloudflare keeps a Worker
+as a series of versions, and adding or changing a secret creates a new one
+without necessarily putting it in front of traffic. The dashboard will show the
+secret in the list while the code still answering requests has never seen it,
+which looks exactly like the secret being wrong. After saving, go to
+**Deployments** and check the live version is the one whose message reads
+`Add secret: BOOKING_SECRET`. If it is not, deploy it. From a machine with
+wrangler:
+
+```bash
+npx wrangler versions list
+npx wrangler deploy
+```
+
+`npx wrangler deploy` uploads the current build and takes the current secrets
+with it, which fixes the same problem from the other end.
+
 ## 4. Move the domain's DNS to Cloudflare
 
 **In Cloudflare: Add a site**, enter `perrinsbarbers.co.uk`, choose the **Free**
