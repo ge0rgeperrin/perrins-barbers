@@ -1,0 +1,173 @@
+{
+  "_readme": "The privacy policy and the terms, in plain text the owners can edit. {name}, {phone}, {email} and {address} are filled in from business in content.json, so contact details never have to be changed twice. Update \"updated\" whenever you change anything here.",
+  "_reviewNote": "This was written to describe exactly what the app and website actually do. Nothing aspirational, nothing copied from another shop. If you change how bookings work, change this too. Have a solicitor read it before launch if you want to be certain; it is accurate, but it is not legal advice.",
+
+  "updated": "22 August 2026",
+
+  "privacy": {
+    "title": "Privacy policy",
+    "intro": "{name} runs this website and app so you can see prices and book a chair. This page says exactly what we collect, where it goes and how long it stays there. It is short because we collect very little.",
+    "sections": [
+      {
+        "heading": "Who we are",
+        "body": [
+          "{name}, {address}. We are the data controller for anything described here. Ring {phone} or email {email} with any question about your information."
+        ]
+      },
+      {
+        "heading": "What we collect, and only when you book",
+        "body": [
+          "Browsing the site or the app collects nothing about you. There is no account to create and nothing to sign in to.",
+          "When you book an appointment you type in:"
+        ],
+        "bullets": [
+          "your first and last name",
+          "your email address, so the confirmation can reach you",
+          "your phone number, so the shop can call if something changes",
+          "anything you choose to write in the note to the barber",
+          "whether you want a text reminder"
+        ]
+      },
+      {
+        "heading": "Where it goes",
+        "body": [
+          "Straight into the shop's appointment diary, which is run by Schedulista (Schedulista Inc., United States). Schedulista sends your confirmation email, sends the text reminder if you asked for one, and holds the appointment until it has been and gone. Their privacy policy governs what they do with it: schedulista.com/privacy.",
+          "Your details pass through our server on the way, because the diary cannot be reached directly from a browser. They are not written to any database of ours, and they are not kept after the booking is made.",
+          "We do not sell anything to anyone, and we do not share your details with anybody except Schedulista."
+        ]
+      },
+      {
+        "heading": "What stays on your own device",
+        "body": [
+          "After a successful booking, your name, email and phone number are saved on your own phone or browser so you do not have to type them again next time. So is which barber you last looked at. That is stored on your device, not on ours, and we cannot read it.",
+          "Clearing the app's data, or your browser's site data, removes it."
+        ]
+      },
+      {
+        "heading": "Cookies and tracking",
+        "body": [
+          "The website sets no cookies of its own. There is no analytics, no advertising, no tracking pixels and no social media trackers. Nothing about your visit is measured or profiled.",
+          "While you are part-way through a booking, our server holds Schedulista's own session for a few minutes inside an encrypted token that your browser passes back when you confirm. It expires after ten minutes, is unreadable to anyone but our server, and is never stored anywhere.",
+          "The typefaces are part of the app, so no request goes to any font service."
+        ]
+      },
+      {
+        "heading": "Server logs",
+        "body": [
+          "Like any website, our hosting keeps ordinary access logs: the page requested, the time, and the IP address it came from. We also count requests per address for a minute at a time so that nobody can flood the booking system. Both exist to keep the service up and are kept only as long as our host retains them."
+        ]
+      },
+      {
+        "heading": "What the app asks your phone for",
+        "body": [
+          "Only whether you are connected to a network, because the app deliberately will not open without one, because live prices and a live diary are the whole point of it. It does not ask for your location, your camera, your contacts, your photos or permission to send notifications."
+        ]
+      },
+      {
+        "heading": "Links out",
+        "body": [
+          "The Directions button opens Google Maps, and the Instagram and Facebook links open those apps or sites. Once you follow one of them you are on somebody else's service and their privacy policy applies, not ours."
+        ]
+      },
+      {
+        "heading": "Children",
+        "body": [
+          "The shop cuts children's hair, but this is not a service aimed at children. A parent or guardian should make the booking."
+        ]
+      },
+      {
+        "heading": "Why we are allowed to hold it",
+        "body": [
+          "To make the appointment you asked for. That is a contract between you and the shop. Keeping the site up and refusing abusive traffic is our legitimate interest. Text reminders are sent only if you tick the box, which is your consent, and you can decline them and still book."
+        ]
+      },
+      {
+        "heading": "Your rights",
+        "body": [
+          "Under UK data protection law you can ask to see what is held about you, have it corrected, have it deleted, or object to it being held. Ring {phone} or email {email} and the shop will sort it out. Because the appointment itself lives in Schedulista's system, deleting an appointment record may mean asking them as well, and the shop will do that for you.",
+          "If you are not happy with how we handle it you can complain to the Information Commissioner's Office at ico.org.uk."
+        ]
+      },
+      {
+        "heading": "Changes",
+        "body": [
+          "If this policy changes, the date at the top of this page changes with it."
+        ]
+      }
+    ]
+  },
+
+  "terms": {
+    "title": "Terms of use",
+    "intro": "The short version: this is a way to book a haircut at {name}. Using it means you are happy with what follows.",
+    "sections": [
+      {
+        "heading": "What this is",
+        "body": [
+          "A website and app for {name}, {address}. It shows what the shop charges and lets you book a chair. The appointment itself is made in the shop's diary, which is run by Schedulista.",
+          "There is no account and nothing to pay here. You pay the barber in the shop."
+        ]
+      },
+      {
+        "heading": "Booking",
+        "body": [
+          "Times shown are the times the diary has free at that moment. A time is not yours until you press Confirm and the confirmation email arrives. Until then somebody else can take it, which is why we say so on the screen.",
+          "Bookings can be made up to {monthsAhead} ahead. For anything further out, ring the shop.",
+          "Please give the right phone number and email. A booking made under somebody else's details, or a booking nobody intends to keep, may be cancelled."
+        ]
+      },
+      {
+        "heading": "Prices",
+        "body": [
+          "Every price on this site is read straight out of the shop's diary, so it is the shop's own price and not a copy that has gone stale. Prices can change.",
+          "The price shown when you book is the price for that service. If the work turns out to be different from the service you booked, such as a longer cut or a beard added on the day, the barber will tell you before starting and the price for that work applies instead."
+        ]
+      },
+      {
+        "heading": "Changing or cancelling",
+        "body": [
+          "Use the link in your confirmation email, or ring {phone}. Please give as much notice as you can so the slot can go to somebody else.",
+          "If you are running late, ring. A chair can usually be held for a few minutes; beyond that the barber may have to rebook you."
+        ]
+      },
+      {
+        "heading": "When it does not work",
+        "body": [
+          "The diary is provided by Schedulista and the site cannot book anything while their system is down. If booking fails, the screen will offer you Schedulista's own booking page or the shop's phone number. Both go to the same diary.",
+          "The app needs an internet connection and will not open without one. That is deliberate: it would rather show you nothing than show you yesterday's prices."
+        ]
+      },
+      {
+        "heading": "Fair use",
+        "body": [
+          "Do not make bookings you do not intend to keep, do not book on somebody else's behalf without telling them, and do not use scripts or bots against the booking system. Requests are rate-limited and abuse will be blocked."
+        ]
+      },
+      {
+        "heading": "Our responsibility",
+        "body": [
+          "The shop takes care to keep prices, times and availability correct, but cannot promise the site is free of errors or always available. Nothing here limits your rights as a consumer under UK law, and nothing here limits liability for death or personal injury caused by negligence, or for fraud.",
+          "Beyond that, the shop is not liable for losses caused by a booking that could not be made, by the diary being unavailable, or by a third-party service such as Schedulista."
+        ]
+      },
+      {
+        "heading": "Your information",
+        "body": [
+          "Handled as set out in the privacy policy."
+        ]
+      },
+      {
+        "heading": "Law",
+        "body": [
+          "These terms are governed by the law of England and Wales, and disputes go to the courts of England and Wales."
+        ]
+      },
+      {
+        "heading": "Contact",
+        "body": [
+          "{name}, {address}. Telephone {phone}. Email {email}."
+        ]
+      }
+    ]
+  }
+}

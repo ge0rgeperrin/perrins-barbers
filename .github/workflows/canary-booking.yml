@@ -1,0 +1,30 @@
+name: canary-booking
+
+# The booking flow rides on three undocumented Schedulista endpoints. This runs
+# every morning before the shop opens, so if they change something we find out
+# from a failed build rather than from a customer who could not book.
+on:
+  schedule:
+    - cron: '15 6 * * *' # 06:15 UTC, before the doors open
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'server/**'
+      - 'app/api/**'
+      - 'scripts/canary-booking.mjs'
+
+jobs:
+  canary:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          # 24, not 20: the tests are TypeScript run straight through
+          # `node --test`, which needs a Node that strips types on its own.
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Booking contract
+        run: npm run canary

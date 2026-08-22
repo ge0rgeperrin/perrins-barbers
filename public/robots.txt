@@ -1,0 +1,8 @@
+# Perrin's Barber Shop. Everything public is crawlable except the booking API,
+# which is ours to call and nothing a search engine should be following.
+
+User-agent: *
+Allow: /
+Disallow: /api/
+
+Sitemap: https://perrinsbarbers.co.uk/sitemap.xml

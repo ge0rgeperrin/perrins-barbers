@@ -1,0 +1,200 @@
+{
+  "fetchedAt": "2026-08-22T06:27:28.960Z",
+  "source": "https://perrins1.schedulista.com/",
+  "providers": [
+    {
+      "id": "1074010081",
+      "name": "David",
+      "role": "Senior Barber",
+      "services": [
+        {
+          "id": "1074623634",
+          "name": "Men's Haircut",
+          "priceGBP": 38.5,
+          "priceLabel": "£38.50",
+          "note": null,
+          "description": "",
+          "bookingUrl": "https://www.schedulista.com/schedule/perrins1/choose_time?provider_id=1074010081&service_id=1074623634"
+        },
+        {
+          "id": "1074625165",
+          "name": "Under 14's Haircut",
+          "priceGBP": 23.5,
+          "priceLabel": "£23.50",
+          "note": "Skin Fade +£5",
+          "description": "",
+          "bookingUrl": "https://www.schedulista.com/schedule/perrins1/choose_time?provider_id=1074010081&service_id=1074625165"
+        },
+        {
+          "id": "1074625168",
+          "name": "Senior Citizen's Haircut",
+          "priceGBP": 18,
+          "priceLabel": "£18",
+          "note": null,
+          "description": "",
+          "bookingUrl": "https://www.schedulista.com/schedule/perrins1/choose_time?provider_id=1074010081&service_id=1074625168"
+        },
+        {
+          "id": "1074625169",
+          "name": "Buzz Cut",
+          "priceGBP": 18,
+          "priceLabel": "£18",
+          "note": null,
+          "description": "",
+          "bookingUrl": "https://www.schedulista.com/schedule/perrins1/choose_time?provider_id=1074010081&service_id=1074625169"
+        },
+        {
+          "id": "1074625170",
+          "name": "Beard Trim (Full Beard)",
+          "priceGBP": 18,
+          "priceLabel": "£18",
+          "note": null,
+          "description": "",
+          "bookingUrl": "https://www.schedulista.com/schedule/perrins1/choose_time?provider_id=1074010081&service_id=1074625170"
+        },
+        {
+          "id": "1074625171",
+          "name": "Beard Trim (Beard Buzz)",
+          "priceGBP": 10,
+          "priceLabel": "£10",
+          "note": null,
+          "description": "",
+          "bookingUrl": "https://www.schedulista.com/schedule/perrins1/choose_time?provider_id=1074010081&service_id=1074625171"
+        },
+        {
+          "id": "1074625172",
+          "name": "Haircut & Full Beard",
+          "priceGBP": 51.5,
+          "priceLabel": "£51.50",
+          "note": null,
+          "description": "",
+          "bookingUrl": "https://www.schedulista.com/schedule/perrins1/choose_time?provider_id=1074010081&service_id=1074625172"
+        },
+        {
+          "id": "1074625173",
+          "name": "Haircut & Beard Buzz",
+          "priceGBP": 43.5,
+          "priceLabel": "£43.50",
+          "note": null,
+          "description": "",
+          "bookingUrl": "https://www.schedulista.com/schedule/perrins1/choose_time?provider_id=1074010081&service_id=1074625173"
+        },
+        {
+          "id": "1074625174",
+          "name": "Buzz Cut & Full Beard",
+          "priceGBP": 34.5,
+          "priceLabel": "£34.50",
+          "note": null,
+          "description": "",
+          "bookingUrl": "https://www.schedulista.com/schedule/perrins1/choose_time?provider_id=1074010081&service_id=1074625174"
+        },
+        {
+          "id": "1074625175",
+          "name": "Buzz Cut & Beard Buzz",
+          "priceGBP": 26.5,
+          "priceLabel": "£26.50",
+          "note": null,
+          "description": "",
+          "bookingUrl": "https://www.schedulista.com/schedule/perrins1/choose_time?provider_id=1074010081&service_id=1074625175"
+        }
+      ]
+    },
+    {
+      "id": "1074024184",
+      "name": "Ben",
+      "role": "Barber",
+      "services": [
+        {
+          "id": "1074670458",
+          "name": "Men's Haircut",
+          "priceGBP": 24,
+          "priceLabel": "£24",
+          "note": "Skin Fade +£4",
+          "description": "",
+          "bookingUrl": "https://www.schedulista.com/schedule/perrins1/choose_time?provider_id=1074024184&service_id=1074670458"
+        },
+        {
+          "id": "1074670459",
+          "name": "Under 12's Haircut",
+          "priceGBP": 16.5,
+          "priceLabel": "£16.50",
+          "note": "Skin Fade +£4",
+          "description": "",
+          "bookingUrl": "https://www.schedulista.com/schedule/perrins1/choose_time?provider_id=1074024184&service_id=1074670459"
+        },
+        {
+          "id": "1074670523",
+          "name": "12 - 16's Haircut",
+          "priceGBP": 19.5,
+          "priceLabel": "£19.50",
+          "note": "Skin Fade +£4",
+          "description": "",
+          "bookingUrl": "https://www.schedulista.com/schedule/perrins1/choose_time?provider_id=1074024184&service_id=1074670523"
+        },
+        {
+          "id": "1074670460",
+          "name": "Senior Citizen's Haircut",
+          "priceGBP": 18,
+          "priceLabel": "£18",
+          "note": null,
+          "description": "",
+          "bookingUrl": "https://www.schedulista.com/schedule/perrins1/choose_time?provider_id=1074024184&service_id=1074670460"
+        },
+        {
+          "id": "1074670461",
+          "name": "Buzz Cut",
+          "priceGBP": 18,
+          "priceLabel": "£18",
+          "note": null,
+          "description": "",
+          "bookingUrl": "https://www.schedulista.com/schedule/perrins1/choose_time?provider_id=1074024184&service_id=1074670461"
+        },
+        {
+          "id": "1074670524",
+          "name": "Beard Trim (Full Beard)",
+          "priceGBP": 15,
+          "priceLabel": "£15",
+          "note": null,
+          "description": "",
+          "bookingUrl": "https://www.schedulista.com/schedule/perrins1/choose_time?provider_id=1074024184&service_id=1074670524"
+        },
+        {
+          "id": "1074670525",
+          "name": "Beard Trim (Beard Buzz)",
+          "priceGBP": 10,
+          "priceLabel": "£10",
+          "note": null,
+          "description": "",
+          "bookingUrl": "https://www.schedulista.com/schedule/perrins1/choose_time?provider_id=1074024184&service_id=1074670525"
+        },
+        {
+          "id": "1074670526",
+          "name": "Haircut & Full Beard",
+          "priceGBP": 34,
+          "priceLabel": "£34",
+          "note": null,
+          "description": "",
+          "bookingUrl": "https://www.schedulista.com/schedule/perrins1/choose_time?provider_id=1074024184&service_id=1074670526"
+        },
+        {
+          "id": "1074670527",
+          "name": "Haircut & Beard Buzz",
+          "priceGBP": 29,
+          "priceLabel": "£29",
+          "note": null,
+          "description": "",
+          "bookingUrl": "https://www.schedulista.com/schedule/perrins1/choose_time?provider_id=1074024184&service_id=1074670527"
+        },
+        {
+          "id": "1074670528",
+          "name": "Buzz Cut & Beard Buzz",
+          "priceGBP": 23,
+          "priceLabel": "£23",
+          "note": null,
+          "description": "",
+          "bookingUrl": "https://www.schedulista.com/schedule/perrins1/choose_time?provider_id=1074024184&service_id=1074670528"
+        }
+      ]
+    }
+  ]
+}

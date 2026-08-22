@@ -1,0 +1,83 @@
+{
+  "_readme": "Everything the owners can change without a developer, except prices. Prices, service names, which barber offers what, and who the barbers are: all of it comes from Schedulista automatically. Never list a barber or a price in here. OWNERS.md explains every block below in plain English.",
+
+  "business": {
+    "name": "Perrin's Barber Shop",
+    "established": 1999,
+    "_straplineNote": "The line under the shop name on the front page. The shop's own hashtag.",
+    "strapline": "#TheHertfordBarber",
+    "tagline": "Traditional barbering on Old Cross, Hertford, since 1999.",
+    "_aboutNote": "The introduction on the front page. Leave a blank line between paragraphs.",
+    "about": "Owned by the infamous David Perrin, Perrin’s Barber Shop has been grooming the gentry of Hertford and the surrounding area since 1999. Trained in Knightsbridge and with over 40 years experience David is a traditional barber that can blend the best of old school techniques with contemporary styles.\n\nBookings available or walk in service.",
+    "phone": "01992 500010",
+    "phoneHref": "tel:+441992500010",
+    "email": "hello@perrinsbarbers.co.uk",
+    "address": ["5 Old Cross", "Hertford", "SG14 1HX"],
+    "mapsUrl": "https://maps.google.com/?q=Perrin%27s%20Barber%20Shop%2C%205%20Old%20Cross%2C%20Hertford%20SG14%201HX",
+    "instagram": "https://www.instagram.com/perrinsbarbers/",
+    "facebook": "https://www.facebook.com/perrinsbarbers/"
+  },
+
+  "_hoursNote": "Confirmed from the Google Business Profile, August 2026. 24-hour times. Set \"closed\": true for a day the shop does not open. day 0 is Sunday.",
+  "hours": [
+    { "day": 0, "opens": "10:00", "closes": "14:00" },
+    { "day": 1, "opens": "", "closes": "", "closed": true },
+    { "day": 2, "opens": "09:00", "closes": "18:00" },
+    { "day": 3, "opens": "09:00", "closes": "20:00" },
+    { "day": 4, "opens": "09:00", "closes": "18:00" },
+    { "day": 5, "opens": "09:00", "closes": "20:00" },
+    { "day": 6, "opens": "08:00", "closes": "16:00" }
+  ],
+
+  "_holidayNote": "One-off closures. Date must be YYYY-MM-DD. Delete entries once they are in the past.",
+  "holidays": [],
+
+  "_bannerNote": "Set active to true to show a strip under the header on every screen.",
+  "banner": {
+    "active": false,
+    "text": "",
+    "link": ""
+  },
+
+  "_bookingNote": "monthsAhead is how far ahead anyone may book. 3 means today plus three months. autoAdvanceMonths is how many empty months the calendar skips on its own before it stops and lets the customer page forward. Both are enforced on the server as well, so nobody can book further out by editing the address bar.",
+  "booking": {
+    "monthsAhead": 3,
+    "autoAdvanceMonths": 2,
+    "smsRemindersOffered": true
+  },
+
+  "_designNote": "The look of the site and the app. Change a colour here and it changes everywhere; no other file holds one. See OWNERS.md before editing.",
+  "_paletteNote": "Black and gold. \"ink\" is the page itself, a true neutral black with no warmth in it, \"panel\" is the raised card behind prices and the booking sheet, and the gold is the shop's own signwriting, sampled pixel for pixel from the lettering on the badge. The open and closed colours are the leaves and the rose on the badge, sampled the same way.",
+  "design": {
+    "palette": {
+      "ink": "#050505",
+      "panel": "#111111",
+      "panel2": "#1B1B1B",
+      "gold": "#C6A43C",
+      "goldLift": "#D8C17A",
+      "goldDeep": "#877029",
+      "cream": "#F2EADA",
+      "muted": "#B4B0A8",
+      "mutedDim": "#8A867E",
+      "open": "#3C8F6A",
+      "closed": "#ED2F0A"
+    },
+    "_cornerNote": "0 = square corners like a painted sign, 2 = the shipped look, 10 = modern and rounded.",
+    "corner": 2,
+    "_densityNote": "Multiplies every gap and margin. 0.9 is tighter, 1.15 is airier. Keep it between 0.8 and 1.3.",
+    "density": 1
+  },
+
+  "_layoutNote": "The order of the blocks down the home screen. Delete a line to remove that block, move a line to move the block. Valid names: hero (the badge, the name, the introduction, the booking button, and the hours and address under it), about (who is in the chairs today), prices, hours, find.",
+  "layout": {
+    "home": ["hero", "about", "prices"],
+    "_featuredCountNote": "How many prices show on the home screen before the 'all prices' link.",
+    "featuredCount": 4
+  },
+
+  "_serviceOverridesNote": "OPTIONAL, and normally empty. Services group themselves from their names, so a barber added in Schedulista appears correctly with no edit here. Use this only to overrule that grouping: keyed by the Schedulista service id, which you can read off services.json. Set hidden to true to keep a service off the list without touching Schedulista.",
+  "serviceOverrides": {},
+
+  "_categoryOrderNote": "The order the groups appear in. Any group not listed goes to the end, alphabetically.",
+  "categoryOrder": ["Haircuts", "Beard", "Haircut & Beard", "More"]
+}

@@ -1,0 +1,1088 @@
+<title>Perrin's Barbershop Build Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,600;6..96,700&family=Archivo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+
+<style>
+/* ---------------------------------------------------------------
+   Single committed theme: shop-front at night. Dark ground, gold
+   rule work, cream type. Every colour painted explicitly so the
+   page holds on either host background.
+   --------------------------------------------------------------- */
+:root{
+  --ink:        #0B0B0D;
+  --panel:      #131316;
+  --panel-2:    #1A1A1E;
+  --line:       rgba(198,162,74,0.20);
+  --line-soft:  rgba(242,238,228,0.09);
+  --gold:       #C6A24A;
+  --gold-lift:  #E6CE86;
+  --gold-deep:  #8C6F2A;
+  --cream:      #F2EEE4;
+  --muted:      #9C978C;
+  --muted-dim:  #6F6B63;
+  --ok:         #6FBF73;
+  --warn:       #D9A441;
+  --bad:        #C4574F;
+
+  --display: "LHF Old Tom Plain", "Bodoni Moda", "Times New Roman", serif;
+  --body:    "Outfit", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --mono:    "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --measure: 68ch;
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--ink);
+  color:var(--cream);
+  font-family:var(--body);
+  font-size:16.5px;
+  line-height:1.6;
+  font-weight:400;
+}
+
+/* gold hairline along the top, used exactly once */
+.rule-top{
+  height:3px;
+  background:linear-gradient(90deg, var(--gold-deep), var(--gold), var(--gold-deep));
+  opacity:.85;
+}
+
+.page{max-width:1180px;margin:0 auto;padding:0 24px 120px}
+
+/* ---- masthead ---------------------------------------------- */
+.mast{padding:72px 0 40px;border-bottom:1px solid var(--line)}
+.eyebrow{
+  font-size:11.5px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--gold);margin:0 0 18px
+}
+.mast h1{
+  font-family:var(--display);font-weight:700;
+  font-size:clamp(38px,6.4vw,68px);line-height:1.02;letter-spacing:-.015em;
+  margin:0 0 18px;text-wrap:balance;color:var(--cream)
+}
+.mast h1 em{font-style:italic;color:var(--gold-lift)}
+.dek{font-size:19px;color:var(--muted);max-width:60ch;margin:0}
+.stamp{
+  display:inline-flex;gap:10px;align-items:center;margin-top:26px;
+  font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted-dim)
+}
+.stamp span{color:var(--gold-deep)}
+
+/* ---- layout ------------------------------------------------ */
+.shell{display:block}
+@media (min-width:1080px){
+  .shell{display:grid;grid-template-columns:1fr 216px;gap:64px;align-items:start}
+}
+.rail{display:none}
+@media (min-width:1080px){
+  .rail{
+    display:block;position:sticky;top:32px;padding-top:56px;
+    border-left:1px solid var(--line);padding-left:20px
+  }
+}
+.rail p{
+  font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--gold);margin:0 0 14px;max-width:none
+}
+.rail a{
+  display:block;font-size:13px;color:var(--muted);text-decoration:none;
+  padding:5px 0;line-height:1.35
+}
+.rail a:hover,.rail a:focus-visible{color:var(--gold-lift)}
+
+main{min-width:0}
+
+/* ---- sections ---------------------------------------------- */
+section{padding-top:64px;scroll-margin-top:24px}
+.sec-head{display:flex;gap:16px;align-items:baseline;margin-bottom:8px}
+.sec-mark{
+  font-family:var(--mono);font-size:12px;color:var(--gold-deep);
+  letter-spacing:.1em;padding-top:6px;flex:none
+}
+h2{
+  font-family:var(--display);font-weight:600;font-size:clamp(26px,3.4vw,36px);
+  line-height:1.14;letter-spacing:-.01em;margin:0;color:var(--cream);text-wrap:balance
+}
+h3{
+  font-family:var(--body);font-weight:600;font-size:17px;
+  margin:38px 0 10px;color:var(--gold-lift)
+}
+h4{
+  font-family:var(--body);font-weight:600;font-size:13px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--muted);margin:28px 0 8px
+}
+p,li{max-width:var(--measure)}
+p{margin:0 0 14px}
+ul,ol{margin:0 0 16px;padding-left:20px}
+li{margin:0 0 7px}
+li::marker{color:var(--gold-deep)}
+a{color:var(--gold-lift);text-underline-offset:3px;text-decoration-thickness:1px}
+strong{color:var(--cream);font-weight:600}
+em{color:var(--muted)}
+code{
+  font-family:var(--mono);font-size:.86em;color:var(--gold-lift);
+  background:rgba(198,162,74,.09);padding:1.5px 5px;border-radius:2px;
+  word-break:break-word
+}
+
+/* ---- panels ------------------------------------------------ */
+.panel{
+  background:var(--panel);border:1px solid var(--line);border-radius:2px;
+  padding:22px 24px;margin:20px 0
+}
+.panel > :last-child{margin-bottom:0}
+.panel h4{margin-top:0}
+.note{border-left:2px solid var(--gold);background:var(--panel-2)}
+.warn{border-left:2px solid var(--warn);background:var(--panel-2)}
+
+.facts{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));
+  gap:1px;background:var(--line);border:1px solid var(--line);margin:32px 0 0
+}
+.fact{background:var(--ink);padding:18px 20px}
+.fact dt{
+  font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--muted-dim);margin:0 0 7px
+}
+.fact dd{
+  margin:0;font-family:var(--display);font-size:20px;font-weight:600;
+  color:var(--gold-lift);line-height:1.25
+}
+.fact dd small{
+  display:block;font-family:var(--body);font-size:12.5px;font-weight:400;
+  color:var(--muted);letter-spacing:0;margin-top:4px
+}
+
+/* ---- code -------------------------------------------------- */
+.code{
+  background:#08080A;border:1px solid var(--line-soft);border-radius:2px;
+  overflow-x:auto;margin:16px 0
+}
+.code .cap{
+  font-family:var(--mono);font-size:11px;color:var(--muted-dim);
+  padding:9px 16px;border-bottom:1px solid var(--line-soft);
+  letter-spacing:.04em
+}
+.code pre{margin:0;padding:16px;font-family:var(--mono);font-size:12.6px;line-height:1.65}
+.code code{background:none;padding:0;color:#CFCABE;font-size:inherit}
+
+/* ---- tables ------------------------------------------------ */
+.tw{overflow-x:auto;margin:18px 0;border:1px solid var(--line);border-radius:2px}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:460px}
+th{
+  text-align:left;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--gold);font-weight:600;padding:12px 16px;
+  border-bottom:1px solid var(--line);background:var(--panel);white-space:nowrap
+}
+td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;color:var(--muted)}
+td:first-child{color:var(--cream)}
+tr:last-child td{border-bottom:0}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* ---- swatches ---------------------------------------------- */
+.sw{display:grid;grid-template-columns:repeat(auto-fit,minmax(132px,1fr));gap:10px;margin:18px 0}
+.sw div{border:1px solid var(--line-soft);border-radius:2px;padding:10px 12px}
+.sw b{display:block;height:34px;border-radius:1px;margin-bottom:9px;border:1px solid rgba(255,255,255,.06)}
+.sw span{display:block;font-family:var(--mono);font-size:11px;color:var(--muted)}
+.sw i{display:block;font-style:normal;font-size:12px;color:var(--cream);margin-bottom:2px}
+
+/* ---- pills ------------------------------------------------- */
+.pill{
+  display:inline-block;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  padding:3px 9px;border-radius:999px;border:1px solid;font-weight:600;white-space:nowrap
+}
+.p-ok{color:var(--ok);border-color:rgba(111,191,115,.4)}
+.p-warn{color:var(--warn);border-color:rgba(217,164,65,.4)}
+.p-bad{color:var(--bad);border-color:rgba(196,87,79,.4)}
+
+.mermaid{
+  background:var(--panel);border:1px solid var(--line);border-radius:2px;
+  padding:20px;margin:20px 0;overflow-x:auto
+}
+
+footer{
+  margin-top:96px;padding-top:28px;border-top:1px solid var(--line);
+  font-size:12.5px;color:var(--muted-dim)
+}
+footer p{max-width:none}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="rule-top"></div>
+
+<div class="page">
+
+<header class="mast">
+  <p class="eyebrow">Build specification &middot; v1</p>
+  <h1>Perrin's Barber&nbsp;Shop<br><em>website &amp; mobile app</em></h1>
+  <p class="dek">A thin, handsome front end for a booking system that already works. Schedulista stays the engine; this is the shop window, the price list and the front door &mdash; on the web, on iPhone, on Android.</p>
+  <p class="stamp">5 Old Cross, Hertford <span>&#8212;</span> Est 1999 <span>&#8212;</span> Frontend only</p>
+</header>
+
+<div class="shell">
+<main>
+
+<dl class="facts">
+  <div class="fact"><dt>Scheduler</dt><dd>perrins1<small>perrins1.schedulista.com</small></dd></div>
+  <div class="fact"><dt>Barbers</dt><dd>2<small>David &middot; Ben</small></dd></div>
+  <div class="fact"><dt>Services live</dt><dd>20<small>10 each, auto-synced</small></dd></div>
+  <div class="fact"><dt>Codebase</dt><dd>One<small>Expo &rarr; web, iOS, Android</small></dd></div>
+  <div class="fact"><dt>Year one cost</dt><dd>~&pound;120<small>domain + store fees</small></dd></div>
+  <div class="fact"><dt>Build time</dt><dd>10&ndash;13 days<small>one developer</small></dd></div>
+</dl>
+
+<section id="idea">
+  <div class="sec-head"><span class="sec-mark">A</span><h2>The idea in one paragraph</h2></div>
+
+  <p>Perrin's already runs its diary, staff, prices and availability inside Schedulista. Rebuilding any of that would be expensive, fragile, and would leave the shop with two sets of prices to keep in step. So we don't. We build a <strong>presentation layer</strong> that reads the public Schedulista page three times a day, turns it into a clean JSON file, and renders it as a proper barbershop price list. Every "Book" button hands the customer straight back to Schedulista &mdash; deep-linked to the exact barber and service they tapped, so they land on the time picker, not the front page.</p>
+
+  <p>The consequence that matters to the owners: <strong>when David changes a price in Schedulista, the website and both apps change too, on their own, with nobody touching code.</strong></p>
+
+  <pre class="mermaid">
+%%{init:{'theme':'dark','themeVariables':{'primaryColor':'#1A1A1E','primaryTextColor':'#F2EEE4','primaryBorderColor':'#C6A24A','lineColor':'#8C6F2A','fontFamily':'Archivo'}}}%%
+flowchart LR
+  S["Schedulista<br/>perrins1"]
+  A["GitHub Action<br/>3x daily"]
+  J["services.json"]
+  C["Sanity Studio<br/>owner edits"]
+  W["Website<br/>static export"]
+  M["iOS + Android<br/>Expo app"]
+
+  S -->|parse HTML| A
+  A -->|commit| J
+  J --> W
+  J -->|fetch on launch| M
+  C --> W
+  C --> M
+  W -->|Book now| S
+  M -->|Book now| S
+  </pre>
+
+  <h3>Why one codebase, not two</h3>
+  <p>Expo with Expo Router compiles the same React components to a native iOS app, a native Android app, and a statically pre-rendered website. For a site this size &mdash; five screens of mostly fixed content &mdash; a separate web codebase would double every future edit for no gain. One repo, one design system, one <code>git push</code>.</p>
+  <p><em>Escape hatch: if the web build ever needs heavier SEO or CMS-driven landing pages, the same components lift into Next.js without a rewrite. Don't do it pre-emptively.</em></p>
+</section>
+
+<section id="not">
+  <div class="sec-head"><span class="sec-mark">B</span><h2>What we deliberately do not build</h2></div>
+  <p>Naming this up front stops it creeping back in halfway through.</p>
+
+  <div class="tw"><table>
+    <thead><tr><th>Not building</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td>A booking engine</td><td>Availability, double-booking, staff rotas, cancellations and reminders stay in Schedulista. We build the <em>interface</em> to them (section C2) and drive their flow from our server &mdash; we never keep a second diary.</td></tr>
+      <tr><td>Payments or deposits</td><td>Card handling drags in PCI scope and Apple's in-app purchase rules. If deposits are ever wanted, turn them on inside Schedulista.</td></tr>
+      <tr><td>Customer accounts or logins</td><td>Schedulista already holds the customer record. A second account system is a support burden with no payoff.</td></tr>
+      <tr><td>A live availability calendar on our side</td><td>It would be stale the moment a walk-in books. Availability is only ever shown by Schedulista itself.</td></tr>
+      <tr><td>A backend server</td><td>There is no server. A scheduled job writes a JSON file; static hosting serves it. Nothing to patch, nothing to pay for, nothing to go down at 2am.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="sched">
+  <div class="sec-head"><span class="sec-mark">C</span><h2>Schedulista integration</h2></div>
+  <p>This is the only genuinely novel part of the build. Everything below was verified against the live page, not assumed.</p>
+
+  <h3>C1 &middot; Confirmed facts</h3>
+  <div class="tw"><table>
+    <thead><tr><th>Thing</th><th>Value</th></tr></thead>
+    <tbody>
+      <tr><td>Public scheduler</td><td><code>https://perrins1.schedulista.com/</code></td></tr>
+      <tr><td>Business code</td><td><code>perrins1</code></td></tr>
+      <tr><td>Canonical host</td><td><code>https://www.schedulista.com/schedule/perrins1</code></td></tr>
+      <tr><td>Provider &mdash; David</td><td>Senior Barber, <code>provider_id=1074010081</code>, 10 services</td></tr>
+      <tr><td>Provider &mdash; Ben</td><td>Barber, <code>provider_id=1074024184</code>, 10 services</td></tr>
+      <tr><td>Deep link format</td><td><code>.../schedule/perrins1/choose_time?provider_id=&lt;P&gt;&amp;service_id=&lt;S&gt;</code></td></tr>
+      <tr><td>Return-to-site params</td><td><code>?rt_url=&lt;encoded&gt;&amp;rt_text=&lt;label&gt;</code> &mdash; puts a "back to perrinsbarbers.co.uk" link inside the Schedulista flow</td></tr>
+      <tr><td>Address and phone on page</td><td>5 Old Cross, Hertford &middot; 01992 500010</td></tr>
+      <tr><td>Service durations</td><td><span class="pill p-warn">Not published</span> &mdash; price and name only. Don't design a UI that needs them.</td></tr>
+      <tr><td>Data delivery</td><td><span class="pill p-ok">Server-rendered HTML</span> &mdash; no JavaScript execution needed, so a plain <code>fetch</code> is enough. No headless browser.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>C2 &middot; The DOM shape we parse</h3>
+  <p>The services block is a flat sequence of <code>h3</code> provider headings, each followed by a <code>dl</code> of that provider's services. Verified structure:</p>
+
+  <div class="code">
+    <div class="cap">perrins1.schedulista.com &mdash; actual markup, abridged</div>
+    <pre><code>&lt;div class='services-list'&gt;
+  &lt;h3&gt;Senior Barber - David&lt;/h3&gt;
+  &lt;dl&gt;
+    &lt;dt&gt;
+      &lt;a class="widget-nav"
+         href="https://www.schedulista.com/schedule/perrins1/choose_time?provider_id=1074010081&amp;amp;service_id=1074625165"&gt;
+        Under 14&#8217;s Haircut - &pound;23.50 (Skin Fade +&pound;5)
+      &lt;/a&gt;
+    &lt;/dt&gt;
+    &lt;dd class='service-description'&gt;&lt;/dd&gt;
+    ...
+  &lt;/dl&gt;
+  &lt;h3&gt;Barber - Ben&lt;/h3&gt;
+  &lt;dl&gt; ... &lt;/dl&gt;
+&lt;/div&gt;</code></pre>
+  </div>
+
+  <p>Three things to note, because each one is a bug if missed:</p>
+  <ul>
+    <li>Apostrophes are typographic (<code>U+2019</code>), not ASCII. Normalise them, or <code>Under 14&#8217;s</code> will never match <code>Under 14's</code> in an overrides file.</li>
+    <li>The name, the price and the surcharge note all live in <strong>one link label</strong> &mdash; <code>Men's Haircut - &pound;24 (Skin Fade +&pound;4)</code>. They must be split apart by regex, and the split has to survive a service name that itself contains a hyphen.</li>
+    <li><code>dd.service-description</code> is currently empty for all 20 services. Wire it anyway: the moment the owners type a description into Schedulista, it appears on the site with no code change.</li>
+  </ul>
+
+  <h3>C3 &middot; The sync script</h3>
+  <p>One file, one dependency (<code>cheerio</code>), no server. It runs in CI and writes a JSON file into the repo.</p>
+
+  <div class="code">
+    <div class="cap">scripts/sync-services.mjs</div>
+    <pre><code>import { load } from 'cheerio';
+import { readFileSync, writeFileSync } from 'node:fs';
+
+const SRC = 'https://perrins1.schedulista.com/';
+const OUT = 'public/services.json';
+const UA  = 'PerrinsBarbershopSite/1.0 (+https://perrinsbarbers.co.uk)';
+
+const html = await fetch(SRC, { headers: { 'user-agent': UA } })
+  .then(r =&gt; r.ok ? r.text() : Promise.reject(new Error(`Schedulista ${r.status}`)));
+
+const $ = load(html);
+const providers = [];
+let current = null;
+
+$('.services-list').children().each((_, el) =&gt; {
+  const tag = el.tagName.toLowerCase();
+
+  if (tag === 'h3') {                        // "Senior Barber - David"
+    const [role, name] = clean($(el).text()).split(/\s+[-–]\s+/);
+    current = { id: null, role: name ? role : '', name: name ?? role, services: [] };
+    providers.push(current);
+  }
+
+  if (tag === 'dl' &amp;&amp; current) {
+    $(el).find('dt &gt; a.widget-nav').each((__, a) =&gt; {
+      const url   = new URL($(a).attr('href'));
+      const label = clean($(a).text());       // "Men's Haircut - £24 (Skin Fade +£4)"
+      const m     = label.match(/^(.*?)\s*[-–]\s*£\s*([\d.]+)\s*(?:\((.+)\))?$/);
+
+      current.id ??= url.searchParams.get('provider_id');
+      current.services.push({
+        id:          url.searchParams.get('service_id'),
+        name:        m ? m[1] : label,
+        priceGBP:    m ? Number(m[2]) : null,
+        priceLabel:  m ? `£${m[2]}` : '',
+        note:        m?.[3] ?? null,           // "Skin Fade +£4"
+        description: clean($(a).closest('dt').next('dd.service-description').text()),
+        bookingUrl:  url.toString(),
+      });
+    });
+  }
+});
+
+// --- guardrails: never publish a broken or empty list ---
+const total = providers.reduce((n, p) =&gt; n + p.services.length, 0);
+if (providers.length &lt; 1 || total &lt; 5 || providers.some(p =&gt; !p.services.length)) {
+  throw new Error(`Parse looks wrong: ${providers.length} providers / ${total} services`);
+}
+
+const prev = JSON.parse(readFileSync(OUT, 'utf8'));
+const next = { fetchedAt: new Date().toISOString(), source: SRC, providers };
+logDiff(prev, next);   // ~10 lines: compare ids + prices, print to the Action summary
+writeFileSync(OUT, JSON.stringify(next, null, 2) + '\n');
+
+function clean(s) { return s.replace(/’/g, "'").replace(/\s+/g, ' ').trim(); }</code></pre>
+  </div>
+
+  <h4>Output shape</h4>
+  <div class="code">
+    <div class="cap">public/services.json</div>
+    <pre><code>{
+  "fetchedAt": "2026-08-22T05:17:00.000Z",
+  "source": "https://perrins1.schedulista.com/",
+  "providers": [
+    {
+      "id": "1074010081",
+      "name": "David",
+      "role": "Senior Barber",
+      "services": [
+        {
+          "id": "1074625165",
+          "name": "Under 14's Haircut",
+          "priceGBP": 23.5,
+          "priceLabel": "£23.50",
+          "note": "Skin Fade +£5",
+          "description": "",
+          "bookingUrl": "https://www.schedulista.com/schedule/perrins1/choose_time?provider_id=1074010081&amp;service_id=1074625165"
+        }
+      ]
+    }
+  ]
+}</code></pre>
+  </div>
+
+  <h3>C4 &middot; The one test that must exist</h3>
+  <p>Save a copy of today's page as <code>fixtures/schedulista.html</code> and assert against it. If Schedulista ever changes their markup, this fails in CI before it fails in front of a customer.</p>
+  <div class="code">
+    <div class="cap">scripts/sync-services.test.mjs &mdash; run with node --test</div>
+    <pre><code>import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import { parse } from './sync-services.mjs';   // export the parser separately from the fetch
+
+const out = parse(readFileSync('fixtures/schedulista.html', 'utf8'));
+
+assert.equal(out.providers.length, 2);
+assert.equal(out.providers.flatMap(p =&gt; p.services).length, 20);
+assert.equal(out.providers[0].name, 'David');
+assert.equal(out.providers[0].services[0].priceGBP, 38.5);
+assert.equal(out.providers[1].services[0].note, 'Skin Fade +£4');</code></pre>
+  </div>
+
+  <h3>C5 &middot; Scheduling the sync</h3>
+  <div class="code">
+    <div class="cap">.github/workflows/sync-services.yml</div>
+    <pre><code>name: sync-services
+on:
+  schedule: [{ cron: '17 5,11,17 * * *' }]   # 3x daily, UTC
+  workflow_dispatch:                          # the owners' "Sync now" button
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions: { contents: write }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: npm ci
+      - run: node --test scripts/            # fixture test runs first
+      - run: node scripts/sync-services.mjs
+      - name: Commit if changed
+        run: |
+          git config user.name  "services-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add public/services.json
+          git diff --staged --quiet || git commit -m "chore: sync Schedulista services"
+          git push</code></pre>
+  </div>
+  <div class="panel note">
+    <h4>Failure behaviour</h4>
+    <p>A failed run does <strong>not</strong> write the file. The previous <code>services.json</code> stays live, the website keeps showing the last known-good prices, and GitHub emails the repo owner. A silent empty price list is the one outcome this design refuses to produce.</p>
+  </div>
+
+  <h3>C6 &middot; How the apps stay fresh</h3>
+  <p>The website is rebuilt by the same commit that updates the JSON, so its HTML is always current. The mobile apps can't be rebuilt three times a day, so they fetch instead &mdash; with a bundled snapshot so the first paint is instant and the app works with no signal.</p>
+  <div class="code">
+    <div class="cap">lib/services.ts</div>
+    <pre><code>import bundled from '../assets/services.json';       // build-time snapshot
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const REMOTE = 'https://perrinsbarbers.co.uk/services.json';
+
+export async function getServices() {
+  try {
+    const res = await fetch(REMOTE, { cache: 'no-store' });
+    if (!res.ok) throw new Error(String(res.status));
+    const fresh = await res.json();
+    await AsyncStorage.setItem('services', JSON.stringify(fresh));
+    return fresh;
+  } catch {
+    const cached = await AsyncStorage.getItem('services');
+    return cached ? JSON.parse(cached) : bundled;
+  }
+}</code></pre>
+  </div>
+  <p>Render <code>bundled</code> immediately on mount, then swap in the fetched copy when it lands. No spinner, no empty state, no flash.</p>
+
+  <h3>C7 &middot; Local overrides</h3>
+  <p>Schedulista owns name, price and availability. It has nowhere to store a category, a running order or a photo &mdash; so those live in a small file keyed by Schedulista's own service ID.</p>
+  <div class="code">
+    <div class="cap">content/service-overrides.json (editable in the CMS)</div>
+    <pre><code>{
+  "1074623634": { "category": "Haircuts", "order": 1, "featured": true,
+                  "blurb": "Consultation, cut, hot-towel finish." },
+  "1074625171": { "category": "Beard",    "order": 6 },
+  "1074670528": { "hidden": true }
+}</code></pre>
+  </div>
+  <ul>
+    <li>A service in the feed with <strong>no override</strong> still appears &mdash; bottom of a "More services" group, default styling. New services are never invisible.</li>
+    <li>An override whose ID has <strong>vanished from the feed</strong> is logged in the CI summary and ignored. Never a crash, never a blank row.</li>
+    <li><code>hidden: true</code> hides it from the list, but the deep link still resolves, so an old shared link never dead-ends.</li>
+  </ul>
+
+  <h3>C8 &middot; Etiquette and the honest risk</h3>
+  <ul>
+    <li>This reads a <strong>public page belonging to the business itself</strong>, three times a day, with an identifying User-Agent. That is polite by any reading &mdash; but it is still an undocumented dependency.</li>
+    <li><strong>Do this in Phase 0:</strong> email Schedulista support, say what you're doing, and ask whether they offer a services feed or API. If they do, swap the parser for it &mdash; same JSON output, everything downstream unchanged. If they say no, you have it in writing that they know.</li>
+    <li>If they ever block it, the overrides file becomes the source of truth and the owners edit prices in two places. Degraded, not broken.</li>
+  </ul>
+</section>
+
+<section id="inline">
+  <div class="sec-head"><span class="sec-mark">C2</span><h2>Booking inside our own interface</h2></div>
+
+  <p>The first version of this plan sent the customer to Schedulista's own page. That is no longer the brief: the booking has to happen <strong>on our site, in our design</strong>. Everything below was verified against the live scheduler before a line of it was built.</p>
+
+  <h3>Three findings that decide the architecture</h3>
+  <div class="tw"><table>
+    <thead><tr><th>Observed</th><th>Consequence</th></tr></thead>
+    <tbody>
+      <tr><td><code>Access-Control-Allow-Origin</code> is absent from every Schedulista response</td><td>A browser on our domain cannot call them at all. <strong>A server-side proxy is not optional.</strong></td></tr>
+      <tr><td><code>_schedulista_session</code> is <code>SameSite=Lax</code></td><td>Even a cross-site form POST would arrive without the session its CSRF token is bound to. Confirms the same conclusion by a second route.</td></tr>
+      <tr><td>No <code>X-Frame-Options</code>, no <code>frame-ancestors</code></td><td>An iframe <em>would</em> work &mdash; and is rejected anyway, because it would put Schedulista's light-themed pages inside a dark shop front. "Inside the website" was never the whole ask; "have that frontend" was.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>The flow we drive, endpoint by endpoint</h3>
+  <div class="code">
+    <div class="cap">verified live &mdash; business code perrins1</div>
+    <pre><code>GET  /schedule/perrins1/available_times_json
+       ?service_id&amp;provider_id&amp;date=YYYYMMDD&amp;time_zone=London
+     -> [{ "start_time": "2026-08-25T09:00:00+0100", "provider_id": 1074010081 }, …]
+
+GET  /schedule/perrins1/reserve_appointment
+       ?service_id&amp;provider_id&amp;date=YYYYMMDD&amp;time=&lt;start_time&gt;
+     -> the details form, carrying an authenticity_token bound to the
+        session cookies set on that same response
+
+POST /schedule/perrins1/reserve_appointment?&lt;same query&gt;
+       utf8, authenticity_token, fname, lname, email, country, phone,
+       client_memo, send_sms, service_id, provider_id, date, time, commit
+     -> 302  appointment created
+        400  form re-rendered with field errors
+        422  token and session disagree</code></pre>
+  </div>
+  <p><em>Schedulista also exposes <code>available_days_json</code>, which would save a request per day. It answers 500 for every parameter combination its own page builds, so it is not used.</em></p>
+
+  <h3>Our three routes</h3>
+  <div class="tw"><table>
+    <thead><tr><th>Route</th><th>Does</th><th>Cache</th></tr></thead>
+    <tbody>
+      <tr><td><code>GET /api/booking/availability</code></td><td>Fourteen days of free slots in one reply, fanned out in parallel upstream and grouped into morning / afternoon / evening.</td><td>60s at the edge</td></tr>
+      <tr><td><code>GET /api/booking/hold</code></td><td>Fetches the details form and returns its session and CSRF token as an encrypted blob. Reserves nothing &mdash; Schedulista has no hold concept, and the UI says so.</td><td>never</td></tr>
+      <tr><td><code>POST /api/booking/reserve</code></td><td>Validates, unseals, submits. The only call in the product with a real-world side effect.</td><td>never</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="panel note">
+    <h4>The hold, and why it is sealed</h4>
+    <p>A hold contains a live Schedulista session cookie. The browser has to hand it back on the final step, so it travels as an AES-256-GCM blob keyed on <code>BOOKING_SECRET</code>: encrypted so the client cannot read the cookie, authenticated so it cannot forge one, and stamped with a ten-minute expiry. The API stays stateless &mdash; no session store, no database &mdash; and no Schedulista credential ever reaches a browser in readable form.</p>
+  </div>
+
+  <h3>Where "instant" actually comes from</h3>
+  <p>Not from the animation. From never fetching anything at the moment someone is waiting for it.</p>
+  <div class="tw"><table>
+    <thead><tr><th>Moment</th><th>What has already happened</th></tr></thead>
+    <tbody>
+      <tr><td>Pointer lands on a price row or the Book button</td><td>Availability for that barber and service is already being fetched.</td></tr>
+      <tr><td>Sheet opens</td><td>A fortnight of slots is in memory, cached for 60 seconds and shared across every entry point.</td></tr>
+      <tr><td>A date is tapped</td><td><strong>No network at all.</strong> The grid re-renders from the fortnight already held.</td></tr>
+      <tr><td>A time is tapped</td><td>The hold opens in the background while the customer starts typing their name.</td></tr>
+      <tr><td>Confirm is pressed</td><td>Only the reservation itself is left. If the hold aged out mid-typing, a fresh one is opened and retried once, silently.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>The calendar</h3>
+  <p>A month at a time, Monday first. Paging stops at <strong>three months</strong> &mdash; that is what the shop takes, it lives in <code>booking.monthsAhead</code> so the owners can move it, and <code>assertWithinHorizon</code> enforces the same number on the server. The arrows stopping is a courtesy; the server refusal is the rule.</p>
+  <ul>
+    <li><strong>One request per month.</strong> The API takes <code>from</code>/<code>to</code> and answers up to 42 days, so opening the calendar is one round trip and every day in that month is then free to browse.</li>
+    <li><strong>The next month arrives before it is asked for</strong>, quietly, as soon as the current one lands.</li>
+    <li><strong>Blank cells, not neighbours.</strong> Days outside the month are empty rather than greyed-out numbers from August and October &mdash; the single biggest source of clutter in a booking calendar, and nobody has ever tapped one on purpose.</li>
+    <li><strong>Side by side or stacked</strong>, decided by <code>onLayout</code> on the panel rather than the window size, so the component responds to the space it actually has. Square cells via <code>aspectRatio</code> mean the grid never needs measuring and never reflows mid-animation.</li>
+    <li>Every date in the product is a <code>YYYY-MM-DD</code> string in Europe/London. A <code>Date</code> object carries the visitor's own timezone with it, and a phone set to Madrid must not move a Hertford appointment by a day.</li>
+  </ul>
+
+  <h3>Motion rules</h3>
+  <ul>
+    <li><strong>Opacity and transform only.</strong> Nothing animates width, height or layout, so no frame ever waits on a reflow.</li>
+    <li><strong>Enter-only step transitions</strong>, 170ms. Sequencing an exit into an entrance costs ~100ms of dead time on every tap and needs an animation callback to be reliable &mdash; one more thing that can leave the sheet stuck on the wrong step.</li>
+    <li><strong>Changing day animates nothing at all.</strong> The month is already in memory, so the times list simply is different on the next frame. Animating a list that has no reason to move is where stutter comes from.</li>
+    <li><strong>Reduced motion resolved once</strong>, at module load, and shared. Asking <code>AccessibilityInfo</code> inside every animated component meant each one rendered, settled, then started animating a tick later &mdash; which is the stutter it was meant to prevent.</li>
+    <li><strong>Memoised leaves.</strong> A calendar day and a form field re-render only when their own props change, so paging a month does not re-render the form and typing a name does not re-render 42 days.</li>
+    <li><strong>Native driver on device</strong>, inline transform on web. No spring, no bounce, no overshoot &mdash; traditional signage does not wobble.</li>
+  </ul>
+
+  <h3>Failure ladder</h3>
+  <p>The rule: never report a booking we are not certain of.</p>
+  <div class="tw"><table>
+    <thead><tr><th>What went wrong</th><th>What the customer sees</th></tr></thead>
+    <tbody>
+      <tr><td>A field is wrong</td><td>The error against the field. Validated on the server too &mdash; the client's check is manners, the server's is the trust boundary.</td></tr>
+      <tr><td>The hold expired while they typed</td><td>Nothing. A new hold is opened and the reservation retried once.</td></tr>
+      <tr><td>The slot went while they typed</td><td>Schedulista's own message, and the time grid to pick again.</td></tr>
+      <tr><td>Schedulista is down or has changed</td><td>A plain message and a button to their hosted page. Never a spinner that never ends.</td></tr>
+      <tr><td><strong>The answer was unreadable</strong></td><td><span class="pill p-bad">Indeterminate</span> &mdash; "we could not confirm that; ring the shop before booking again, so you do not end up with two appointments." Never a confirmation that might be a lie.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Keeping it safe</h3>
+  <ul>
+    <li><strong>Whitelist.</strong> Only this shop's own barber/service id pairs pass the proxy, so the endpoint cannot be pointed at another Schedulista business.</li>
+    <li><strong>Rate limit</strong> per IP: 60 availability lookups a minute, 8 reservations per ten minutes. <em>ponytail: in-process counter, per server instance. Move it to the edge if booking spam ever becomes real.</em></li>
+    <li><strong>Honeypot</strong> field. Filled in, the reply is a cheerful success and nothing is booked.</li>
+    <li><strong><code>BOOKING_SECRET</code></strong> of 32+ characters, or booking refuses to start in production.</li>
+  </ul>
+
+  <h3>The canary</h3>
+  <p>Three undocumented endpoints carry real bookings, so they get a tripwire of their own. <code>npm run canary</code> runs at 06:15 every morning and checks that slots still have their shape, the form still has its eight fields, and an invalid CSRF token is still rejected with 422. It never creates an appointment. When Schedulista changes something, a build fails instead of a customer's booking.</p>
+
+  <div class="panel warn">
+    <h4>What has not been tested, and cannot be</h4>
+    <p>Every step up to the reservation is verified against the live system. The final POST creates a real appointment in a real diary, so it has deliberately never been run &mdash; the closest safe probes are an invalid CSRF token (422, as expected) and a valid token with invalid data (400, with the field errors the UI renders). <strong>Before launch the shop should make one booking through the site and cancel it from the confirmation email.</strong></p>
+    <p>Also: this is a heavier use of Schedulista than reading a public page. Email their support, say what the site does, and ask whether they will support it or offer a proper API. If they do, only <code>server/schedulista.ts</code> changes.</p>
+  </div>
+</section>
+
+<section id="owner">
+  <div class="sec-head"><span class="sec-mark">D</span><h2>Owner control &mdash; the actual requirement</h2></div>
+  <p>"Easy for the owners to adjust without a developer" is a design constraint, not a nice-to-have. It decides where every piece of content lives.</p>
+
+  <div class="tw"><table>
+    <thead><tr><th>To change&hellip;</th><th>They edit</th><th>Live in</th><th>Needs a dev?</th></tr></thead>
+    <tbody>
+      <tr><td>Prices, service names, barbers, opening times, holidays, days off</td><td>Schedulista, as today</td><td>&le; 8 hrs, or instantly via "Sync now"</td><td><span class="pill p-ok">No</span></td></tr>
+      <tr><td>About text, hours table, gallery photos, offers banner, phone, address, social links</td><td>Sanity Studio</td><td>~1 min</td><td><span class="pill p-ok">No</span></td></tr>
+      <tr><td>Service categories, running order, featured service</td><td>Sanity Studio</td><td>~1 min</td><td><span class="pill p-ok">No</span></td></tr>
+      <tr><td>Colours, fonts, layout, new screens</td><td>&mdash;</td><td>&mdash;</td><td><span class="pill p-warn">Yes</span></td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Why a CMS and not a JSON file in GitHub</h3>
+  <p>A JSON file is free and needs no account &mdash; and one missing comma from a busy barber breaks the build on a Saturday morning. <strong>Sanity</strong>'s free tier gives a hosted editor that works on a phone, handles image uploads and cropping, and serves the same JSON to the website and both apps from one API. Cost at this scale: nothing.</p>
+  <p><em>If they'd rather own everything in git, Decap CMS gives a similar admin screen backed by the repo. Same shape, slightly rougher editing.</em></p>
+
+  <h3>Sanity schema &mdash; the whole thing</h3>
+  <div class="code">
+    <div class="cap">sanity/schema.ts &mdash; one singleton document plus a gallery type</div>
+    <pre><code>siteSettings (singleton)
+  - tagline            string     "Hertford's barbershop since 1999"
+  - about              text       two or three sentences for the home screen
+  - phone              string     "01992 500010"
+  - address            text       "5 Old Cross, Hertford SG14 1RB"
+  - mapsUrl            url
+  - hours[]            object     { day, opens, closes, closed }
+  - holidayNotes[]     object     { date, label }   e.g. "Closed - Boxing Day"
+  - banner             object     { active, text, link }
+  - instagram          url
+  - facebook           url
+  - serviceOverrides[] object     { schedulistaId, category, order, featured, blurb, hidden }
+
+galleryImage
+  - image              image      hotspot enabled
+  - alt                string     required - accessibility, not optional
+  - order              number</code></pre>
+  </div>
+
+  <h3>Hand-over pack</h3>
+  <p>The build isn't finished until this exists. One page, printed and pinned up in the shop:</p>
+  <ol>
+    <li>"To change a price" &rarr; three screenshots of Schedulista, and the note that the site catches up within eight hours.</li>
+    <li>"To change anything else" &rarr; the Sanity Studio URL, their login, three screenshots.</li>
+    <li>"To make a change appear right now" &rarr; the GitHub "Run workflow" button.</li>
+    <li>Who to call when something looks wrong, and the one thing to check first: is Schedulista itself showing the right price?</li>
+  </ol>
+</section>
+
+<section id="design">
+  <div class="sec-head"><span class="sec-mark">E</span><h2>Design system</h2></div>
+  <p>Traditional barbershop, read as: dark panelled walls, gilt signwriting, brass, no gloss. The restraint is the point &mdash; one accent, hairline rules, near-square corners, almost no motion. Nothing rounded and glowing.</p>
+
+  <h3>Palette</h3>
+  <div class="sw">
+    <div><b style="background:#0B0B0D"></b><i>ink</i><span>#0B0B0D</span></div>
+    <div><b style="background:#131316"></b><i>panel</i><span>#131316</span></div>
+    <div><b style="background:#1A1A1E"></b><i>panel-2</i><span>#1A1A1E</span></div>
+    <div><b style="background:#C6A24A"></b><i>gold</i><span>#C6A24A</span></div>
+    <div><b style="background:#E6CE86"></b><i>gold-lift</i><span>#E6CE86</span></div>
+    <div><b style="background:#8C6F2A"></b><i>gold-deep</i><span>#8C6F2A</span></div>
+    <div><b style="background:#F2EEE4"></b><i>cream</i><span>#F2EEE4</span></div>
+    <div><b style="background:#9C978C"></b><i>muted</i><span>#9C978C</span></div>
+  </div>
+  <ul>
+    <li><strong>Gold is the only accent.</strong> It marks exactly one thing per screen: the primary action. Everything else is cream, muted, or a hairline.</li>
+    <li>Hairlines are <code>rgba(198,162,74,0.20)</code> &mdash; gold at low alpha, never grey. That single choice is what makes the dark read as panelled rather than as a generic dark mode.</li>
+    <li>Status colours are separate and never used decoratively: <code>#6FBF73</code> open, <code>#C4574F</code> closed.</li>
+    <li>The neutrals carry a slight warm bias (cream, not white; <code>#0B0B0D</code>, not <code>#000</code>) so gold sits on them without vibrating.</li>
+  </ul>
+
+  <h3>Typography</h3>
+  <div class="tw"><table>
+    <thead><tr><th>Role</th><th>Face</th><th>Used for</th></tr></thead>
+    <tbody>
+      <tr><td>Display</td><td>Yeseva One</td><td>Shop name, screen titles, barber names, prices &mdash; the only face allowed to carry gold. Closest match on Google Fonts to the logo's Victorian high-contrast serif. One token, <code>font.display</code>; see the note below before treating it as confirmed.</td></tr>
+      <tr><td>Body and UI</td><td>Archivo 400/500/600</td><td>Everything else. Grotesque, slightly industrial, excellent tabular figures for the time grid.</td></tr>
+      <tr><td>Labels</td><td>Archivo 600, 11px, <code>letter-spacing: .18em</code>, uppercase</td><td>"SERVICES", "EST 1999", section eyebrows.</td></tr>
+    </tbody>
+  </table></div>
+  <ul>
+    <li>Type scale, and stay on it: <code>11 / 13 / 15 / 17 / 20 / 26 / 34 / 48</code>.</li>
+    <li><strong>Dot leaders on the price list</strong>, the way a barbershop board is set. They are not decoration: they do the job tabular figures would, letting the eye track the row instead of the digits, so the display face can keep its own letter widths.</li>
+    <li>Body copy capped near 65 characters. Every screen is set left &mdash; a centred column of evenly spaced blocks is what a page looks like when nobody decided anything.</li>
+  </ul>
+  <div class="panel warn">
+    <p><strong>The typeface is a best match, not an identification.</strong> A 200px raster is not enough to be certain which face the logo uses. Yeseva One ships as the closest thing on Google Fonts; Rye is the alternative if the shop wants the more western reading. Ask whoever drew the logo, or run the original artwork through a font-identification service, and change <code>font.display</code> &mdash; nothing else in the codebase names a typeface.</p>
+  </div>
+
+  <h3>Form and motion</h3>
+  <ul>
+    <li><strong>Radius 2px</strong> on cards and buttons, <code>999px</code> on status pills only. Traditional signage is square-cornered; <code>rounded-2xl</code> would make it read as a startup.</li>
+    <li><strong>No drop shadows.</strong> On a dark ground they turn to mud. Separate surfaces with a 1px gold hairline plus a <code>rgba(255,255,255,.04)</code> top edge.</li>
+    <li><strong>Texture:</strong> a 3% film-grain overlay across the app background. Enough to stop flat black looking like a default. Nothing more.</li>
+    <li><strong>Motion:</strong> 180&ndash;220ms ease-out fades and a 6px rise on list entry. No springs, no bounce, no parallax. Full <code>prefers-reduced-motion</code> support.</li>
+    <li>The barber pole appears <strong>once</strong>, as a 3px diagonal-striped rule under the header. Using it twice makes it a theme park.</li>
+  </ul>
+
+  <h3>Tokens as code</h3>
+  <div class="code">
+    <div class="cap">theme.ts &mdash; one file, imported by every component on all three platforms</div>
+    <pre><code>export const color = {
+  ink: '#0B0B0D', panel: '#131316', panel2: '#1A1A1E',
+  line: 'rgba(198,162,74,0.20)',
+  gold: '#C6A24A', goldLift: '#E6CE86', goldDeep: '#8C6F2A',
+  cream: '#F2EEE4', muted: '#9C978C',
+  open: '#6FBF73', closed: '#C4574F',
+};
+export const space  = [0, 4, 8, 12, 16, 24, 32, 48, 64, 96];
+export const radius = { card: 2, pill: 999 };
+export const type   = { display: 'BodoniModa_600SemiBold', body: 'Archivo_400Regular' };</code></pre>
+  </div>
+
+  <h3>Logo</h3>
+  <div class="panel warn">
+    <p>The only asset available today is a low-resolution raster, and the copy Schedulista holds is a 100px thumbnail. <strong>Phase 0 task:</strong> get the original vector from whoever drew it, or redraw the wordmark, "EST 1999" and the crossed scissors as SVG. Export a 1024&times;1024 PNG for the app icons and a monochrome-gold SVG for headers. App icon, favicon, splash screen and any print all depend on this existing first.</p>
+  </div>
+</section>
+
+<section id="screens">
+  <div class="sec-head"><span class="sec-mark">F</span><h2>Screens</h2></div>
+  <p>Five routes, identical on web and native. Web renders them as sections of one scrolling page plus real URLs; native renders them as tabs.</p>
+
+  <h3>1 &middot; Home &mdash; the front door</h3>
+  <p>The brief says: open with information about the business and a Book Now button. Order, top to bottom:</p>
+  <ol>
+    <li><strong>Logo mark</strong> on ink, centred, with <code>EST 1999</code> letterspaced beneath.</li>
+    <li><strong>One line of positioning</strong> from the CMS &mdash; <em>"Hertford's barbershop, on Old Cross since 1999."</em></li>
+    <li><strong>Book Now</strong> &mdash; solid gold, full-width on mobile, the only gold-filled element on the screen.</li>
+    <li><strong>Status chip</strong> &mdash; <em>"Open now &middot; closes 17:30"</em> or <em>"Closed &middot; opens Tue 09:00"</em>, computed live in <code>Europe/London</code>.</li>
+    <li><strong>About</strong> &mdash; two or three sentences, from the CMS.</li>
+    <li><strong>Quick actions</strong> &mdash; Call &middot; Directions &middot; Price list. On native these are real intents: <code>tel:</code>, Apple/Google Maps, tab jump.</li>
+    <li><strong>Featured prices</strong> &mdash; the four services marked <code>featured</code>, with a "See all 20" link.</li>
+    <li><strong>Gallery strip</strong> &mdash; horizontal scroll, six images.</li>
+    <li><strong>Hours table</strong>, today's row highlighted in gold.</li>
+    <li><strong>Footer</strong> &mdash; address, phone, Instagram, Facebook, "Bookings powered by Schedulista".</li>
+  </ol>
+  <p>Mobile web additionally gets a sticky bottom <strong>Book Now</strong> bar once the hero scrolls out of view.</p>
+
+  <h3>2 &middot; Services &mdash; where the sync pays off</h3>
+  <ul>
+    <li>Segmented control at the top: <strong>David</strong> / <strong>Ben</strong>. Two barbers with different price lists &mdash; showing both at once is confusing, and their rates differ substantially.</li>
+    <li>Rows grouped by category from the overrides: Haircuts &middot; Beard &middot; Combinations.</li>
+    <li>Each row: name in Archivo 15, surcharge as a small outlined chip (<em>Skin Fade +&pound;4</em>), price right-aligned in Bodoni, tabular. A hairline between rows, nothing else.</li>
+    <li><strong>Tapping the row opens that service's Schedulista deep link</strong> &mdash; the customer lands on the time picker with barber and service already chosen. This is the whole reason for capturing the IDs.</li>
+    <li>Footer line: <em>"Prices synced from our booking system &middot; confirmed at checkout."</em> Honest about the sync delay, in one sentence.</li>
+  </ul>
+
+  <h3>3 &middot; Gallery</h3>
+  <p>Two-column masonry from Sanity, tap for full screen. Alt text is a required CMS field.</p>
+
+  <h3>4 &middot; Visit</h3>
+  <p>Static map image (tap opens the device's maps app), address, tap-to-call, full hours with holiday notes, parking note, socials.</p>
+
+  <h3>5 &middot; Book</h3>
+  <p>A sheet over whatever screen you were on: barber, service, date and time, details, confirmation. Identical on web and phone, and never leaves the site. Section C2 has the whole integration.</p>
+  <ul>
+    <li>Entering from a price row skips straight to the calendar &mdash; barber and service are already known.</li>
+    <li>The hosted Schedulista page is kept as the fallback only, reached through <code>expo-web-browser</code> on a phone, and only when our own flow has failed.</li>
+  </ul>
+</section>
+
+<section id="web">
+  <div class="sec-head"><span class="sec-mark">G</span><h2>The website</h2></div>
+  <ul>
+    <li><strong>Build:</strong> <code>expo export --platform web</code> with <code>web.output: 'static'</code> &mdash; real pre-rendered HTML per route, not a blank SPA shell.</li>
+    <li><strong>Host:</strong> Vercel or Netlify free tier, auto-deploying from <code>main</code>. The services-bot commit triggers a rebuild for free.</li>
+    <li><strong>Domain:</strong> a <code>.co.uk</code>, with <code>www</code> and apex both resolving and HTTPS forced.</li>
+  </ul>
+
+  <h3>Local SEO &mdash; the part that brings in customers</h3>
+  <p>For a Hertford barbershop this outranks almost everything else on this page in commercial value.</p>
+  <ul>
+    <li><code>&lt;title&gt;Perrin's Barber Shop &mdash; Barbers in Hertford&lt;/title&gt;</code>, a real meta description, and an OG image using the logo on ink.</li>
+    <li><strong>JSON-LD <code>HairSalon</code></strong> with <code>name</code>, <code>address</code>, <code>telephone</code>, <code>geo</code>, <code>openingHoursSpecification</code>, <code>priceRange</code>, <code>hasMap</code>, and <code>potentialAction</code> pointing at the Schedulista URL. Generate the hours from the same CMS data that renders the visible table, so the two can't disagree.</li>
+    <li>The rendered price list is real indexable text &mdash; people search "barber prices hertford", and this answers it.</li>
+    <li>Point the Google Business Profile's website field at the new domain and its booking field at Schedulista.</li>
+    <li><code>sitemap.xml</code>, <code>robots.txt</code>, canonical tags.</li>
+  </ul>
+
+  <h3>Performance and privacy budget</h3>
+  <ul>
+    <li>Lighthouse &ge; 95 on mobile. Fonts <code>display=swap</code>, subset to Latin, preconnected.</li>
+    <li>Images served as WebP through Sanity's CDN with explicit <code>width</code>/<code>height</code> &mdash; no layout shift.</li>
+    <li><strong>Analytics:</strong> Plausible or Umami. Cookieless, so under UK GDPR there is <strong>no consent banner</strong> &mdash; one fewer thing to build, one fewer thing to annoy customers with, and one fewer thing that can be non-compliant.</li>
+  </ul>
+</section>
+
+<section id="app">
+  <div class="sec-head"><span class="sec-mark">H</span><h2>The mobile apps</h2></div>
+  <ul>
+    <li><strong>Expo SDK 52+</strong>, Expo Router, TypeScript. Bottom tabs: Home &middot; Services &middot; Gallery &middot; Visit.</li>
+    <li><strong>EAS Build</strong> for binaries, <strong>EAS Submit</strong> for the stores, <strong>EAS Update</strong> for over-the-air JavaScript updates &mdash; copy and layout changes reach phones in about a minute with no App Store review.</li>
+    <li>Native icon and splash generated from the Phase 0 vector logo.</li>
+  </ul>
+
+  <div class="panel warn">
+    <h4>App Store guideline 4.2 &mdash; plan for this or lose two weeks</h4>
+    <p>Apple rejects apps that are a website in a wrapper. An app whose only function is "open Schedulista" <strong>will</strong> be rejected. The native capabilities below are not decoration; they are what makes it approvable, and each is genuinely useful:</p>
+    <ul>
+      <li>Full price list readable <strong>offline</strong>, from the bundled snapshot.</li>
+      <li>Live "Open now / Closed" computed on device against <code>Europe/London</code>.</li>
+      <li>One-tap call and one-tap directions into the native maps app.</li>
+      <li>"Your usual barber" &mdash; remembers David or Ben locally and defaults the Services tab to them.</li>
+      <li>Native share sheet for a service and its price.</li>
+      <li>Gallery with a native full-screen viewer and pinch-zoom.</li>
+    </ul>
+    <p>Submit under <strong>Perrin's own developer accounts</strong>, and use real shop photography in the store listing.</p>
+  </div>
+
+  <h3>Store listing checklist</h3>
+  <p class="panel warn"><strong>Superseded &mdash; see STORE.md.</strong> This list was written when booking still handed the customer to Schedulista's own page. Now that the form is ours, the app <em>does</em> collect name, email and phone, and a privacy declaration saying "nothing" would be false. The corrected answers, the current screenshot sizes, and the Play closed-testing rule that catches personal developer accounts are all in <code>STORE.md</code>.</p>
+  <ul>
+    <li>Screenshots at every required size &mdash; Apple's requirement has moved to a 6.9" iPhone set, plus 13" iPad while <code>supportsTablet</code> is true.</li>
+    <li>Privacy declarations: Contact Info &rarr; Name, Email, Phone; used for <strong>App Functionality</strong>; linked to identity; <strong>not</strong> used for tracking; shared with Schedulista. No analytics SDK, no ad ID, no account &mdash; those parts of the original claim still hold.</li>
+    <li>A hosted privacy policy page &mdash; both stores require a URL. It is <code>/privacy</code>, and it is reachable inside the app.</li>
+    <li>Age rating 4+, category Lifestyle.</li>
+    <li>Google Play data-safety form filled to match the Apple labels.</li>
+  </ul>
+
+  <h3>Deferred to a later phase, on purpose</h3>
+  <p>Push notifications for last-minute cancellations are the obvious next feature and the shop would use them. They need a sending dashboard the owners can operate (OneSignal free tier), notification permissions handled properly, and a story for people who decline. That is its own small project. <strong>Ship without it</strong>, then add it once the apps are live and the owners have asked twice.</p>
+</section>
+
+<section id="repo">
+  <div class="sec-head"><span class="sec-mark">I</span><h2>Repository layout</h2></div>
+  <div class="code">
+    <div class="cap">perrins-barbershop/</div>
+    <pre><code>app/                      # Expo Router - one file = one route on all 3 platforms
+  _layout.tsx             # tabs (native) / header + nav (web)
+  index.tsx               # Home
+  services.tsx
+  gallery.tsx
+  visit.tsx
+  privacy.tsx             # required by both app stores
+components/
+  BookButton.tsx          # the only gold-filled control in the app
+  ServiceRow.tsx
+  OpenNowChip.tsx
+  HoursTable.tsx
+lib/
+  services.ts             # fetch + cache + bundled fallback
+  cms.ts                  # Sanity client
+  hours.ts                # isOpenNow() - pure, unit tested
+theme.ts                  # the tokens from section E
+assets/
+  services.json           # build-time snapshot
+  logo.svg  icon.png  splash.png
+content/
+  service-overrides.json
+scripts/
+  sync-services.mjs
+  sync-services.test.mjs
+fixtures/
+  schedulista.html        # frozen copy of the page, for the parser test
+public/
+  services.json           # what CI writes; what the apps fetch
+.github/workflows/
+  sync-services.yml
+  deploy-web.yml</code></pre>
+  </div>
+  <p>Two files hold real logic and therefore get tests: <code>sync-services.mjs</code> (the parser, against the fixture) and <code>hours.ts</code> (<code>isOpenNow</code> across midnight, closed days, and the BST/GMT switch). Nothing else needs one &mdash; it's presentation.</p>
+</section>
+
+<section id="phases">
+  <div class="sec-head"><span class="sec-mark">J</span><h2>Build phases</h2></div>
+  <p>Numbered because they genuinely are sequential &mdash; each phase's output is the next one's input. Estimates assume one developer.</p>
+
+  <div class="tw"><table>
+    <thead><tr><th>#</th><th>Phase</th><th class="num">Days</th><th>Done when</th></tr></thead>
+    <tbody>
+      <tr><td>0</td><td>Accounts and assets &mdash; domain, Apple Developer, Google Play, Sanity, GitHub, Expo. Vector logo recovered. Email sent to Schedulista support.</td><td class="num">1</td><td>Every credential sits in the owners' password manager, and the logo exists as SVG.</td></tr>
+      <tr><td>1</td><td>The sync &mdash; parser, fixture test, GitHub Action, first committed <code>services.json</code>.</td><td class="num">1</td><td>All 20 services and both providers parse correctly, and a deliberate price change in Schedulista appears in the JSON on the next run.</td></tr>
+      <tr><td>2</td><td>Design system and Home &mdash; tokens, fonts, logo, hero, Book Now, open-now chip.</td><td class="num">2&ndash;3</td><td>Home looks right on web, iOS simulator and Android emulator from a single component tree.</td></tr>
+      <tr><td>3</td><td>Services, Gallery, Visit &mdash; the sync rendered as a real price list with working deep links.</td><td class="num">2</td><td>Tapping any of the 20 services lands on the correct Schedulista time picker.</td></tr>
+      <tr><td>4</td><td>CMS wiring &mdash; Sanity schema, studio deployed, all copy and images moved out of code.</td><td class="num">1</td><td>An owner edits the about text on their phone and sees it live.</td></tr>
+      <tr><td>5</td><td>Web polish &mdash; SEO, JSON-LD, sitemap, analytics, custom domain, Lighthouse pass.</td><td class="num">1</td><td>Site live on the real domain, structured data validates, Lighthouse &ge; 95.</td></tr>
+      <tr><td>6</td><td>Native features &mdash; offline, usual-barber, share, call and directions intents, icons, splash.</td><td class="num">1&ndash;2</td><td>An airplane-mode launch still shows the full price list.</td></tr>
+      <tr><td>7</td><td>QA and submission &mdash; device matrix, accessibility, store listings, builds submitted.</td><td class="num">2</td><td>Both binaries submitted; hand-over pack printed and in the shop.</td></tr>
+      <tr><td>&mdash;</td><td><em>Later:</em> push notifications, Instagram-fed gallery, loyalty card</td><td class="num">&mdash;</td><td>Only after the owners ask.</td></tr>
+    </tbody>
+  </table></div>
+  <p><strong>Total: 10&ndash;13 working days</strong>, plus 1&ndash;7 days of App Store review running in the background.</p>
+</section>
+
+<section id="qa">
+  <div class="sec-head"><span class="sec-mark">K</span><h2>QA checklist</h2></div>
+  <div class="tw"><table>
+    <thead><tr><th>Area</th><th>Check</th></tr></thead>
+    <tbody>
+      <tr><td>Sync</td><td>Change a price in Schedulista, run the workflow manually, confirm web and both apps show it. Then break the fixture on purpose and confirm CI fails while the old JSON survives.</td></tr>
+      <tr><td>Deep links</td><td>All 20 links open the right barber and service. Check one with a surcharge note and one with an apostrophe in the name.</td></tr>
+      <tr><td>Offline</td><td>Airplane mode: app opens, price list renders, Book Now shows a clear "no connection" message rather than a blank browser.</td></tr>
+      <tr><td>Hours</td><td>Open-now chip correct at 08:59, 09:00, 17:29, 17:30, on a closed day, and across the BST/GMT change.</td></tr>
+      <tr><td>Devices</td><td>iPhone SE (small), iPhone 15 Pro (Dynamic Island), a mid-range Android, iPad, and desktop web at 1440px.</td></tr>
+      <tr><td>Accessibility</td><td>Cream on ink and gold on ink both pass 4.5:1. Every image has alt text. Full VoiceOver and TalkBack pass on Home and Services. Tap targets &ge; 44px. Text scales to 200% without clipping.</td></tr>
+      <tr><td>Web</td><td>Lighthouse &ge; 95 mobile. Rich Results test passes on the HairSalon schema. No horizontal scroll at 320px.</td></tr>
+      <tr><td>Content</td><td>Every string on screen traceable to Schedulista or Sanity. Any hard-coded copy found is a bug.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="cost">
+  <div class="sec-head"><span class="sec-mark">L</span><h2>Running costs</h2></div>
+  <div class="tw"><table>
+    <thead><tr><th>Item</th><th class="num">Year one</th><th class="num">Per year after</th></tr></thead>
+    <tbody>
+      <tr><td>Domain (.co.uk)</td><td class="num">&pound;10</td><td class="num">&pound;10</td></tr>
+      <tr><td>Web hosting &mdash; Vercel or Netlify free tier</td><td class="num">&pound;0</td><td class="num">&pound;0</td></tr>
+      <tr><td>Sanity CMS &mdash; free tier</td><td class="num">&pound;0</td><td class="num">&pound;0</td></tr>
+      <tr><td>GitHub Actions &mdash; free tier</td><td class="num">&pound;0</td><td class="num">&pound;0</td></tr>
+      <tr><td>Apple Developer Program</td><td class="num">&pound;79</td><td class="num">&pound;79</td></tr>
+      <tr><td>Google Play &mdash; one-off registration</td><td class="num">&pound;20</td><td class="num">&pound;0</td></tr>
+      <tr><td>Analytics (Plausible) &mdash; optional</td><td class="num">&pound;0&ndash;70</td><td class="num">&pound;0&ndash;70</td></tr>
+      <tr><td>EAS Build &mdash; free tier is enough at this cadence</td><td class="num">&pound;0</td><td class="num">&pound;0</td></tr>
+      <tr><td><strong>Total</strong></td><td class="num"><strong>~&pound;110&ndash;180</strong></td><td class="num"><strong>~&pound;90&ndash;160</strong></td></tr>
+    </tbody>
+  </table></div>
+  <p>Schedulista's own subscription is unchanged &mdash; this adds nothing to it.</p>
+</section>
+
+<section id="risk">
+  <div class="sec-head"><span class="sec-mark">M</span><h2>Risks</h2></div>
+  <div class="tw"><table>
+    <thead><tr><th>Risk</th><th>Likelihood</th><th>Mitigation</th></tr></thead>
+    <tbody>
+      <tr><td>Schedulista changes their page markup</td><td><span class="pill p-warn">Medium</span></td><td>The fixture test fails in CI before anything ships; guardrails refuse to write a bad file; last-good JSON stays live. Roughly a 30-minute selector fix.</td></tr>
+      <tr><td>Schedulista blocks automated requests</td><td><span class="pill p-ok">Low</span></td><td>Ask for a feed in Phase 0. Fallback: the overrides file becomes the price source, edited in Sanity.</td></tr>
+      <tr><td>Prices drift between the site and Schedulista</td><td><span class="pill p-ok">Low</span></td><td>Three syncs a day, a manual "Sync now" button, and a visible "confirmed at checkout" line. The booking flow itself is always live.</td></tr>
+      <tr><td>App Store 4.2 rejection</td><td><span class="pill p-warn">Medium</span></td><td>The native feature set in section H, submitted from the shop's own account. Budget one resubmission.</td></tr>
+      <tr><td>Owners locked out of an account later</td><td><span class="pill p-warn">Medium</span></td><td>Every account created in the shop's name from day one, all credentials in their password manager. Never the developer's Apple ID.</td></tr>
+      <tr><td>Logo never upgraded past the low-res raster</td><td><span class="pill p-bad">High</span></td><td>Phase 0 blocker. App icons and the splash screen cannot be produced without it, so it can't be quietly skipped.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="decide">
+  <div class="sec-head"><span class="sec-mark">N</span><h2>Decisions needed before Phase 1</h2></div>
+  <p>Nine questions. Everything above proceeds on the stated assumption if no answer comes back.</p>
+  <div class="tw"><table>
+    <thead><tr><th>Question</th><th>Assumed if unanswered</th></tr></thead>
+    <tbody>
+      <tr><td>Domain name?</td><td><code>perrinsbarbers.co.uk</code>, if available</td></tr>
+      <tr><td>The logo says <strong>Est 1999</strong>; local directories say the shop has been going since 2002. Which is right?</td><td>1999, per the logo</td></tr>
+      <tr><td>David's Men's Haircut reads &pound;38.50 against Ben's &pound;24. Correct, or a typo in Schedulista?</td><td>Correct &mdash; a senior rate</td></tr>
+      <tr><td>Opening hours aren't published on the scheduler page. What are they, including any half-days?</td><td>Blocks the open-now chip &mdash; must be answered</td></tr>
+      <tr><td>Who owns the Apple and Google developer accounts?</td><td>The shop, not the developer</td></tr>
+      <tr><td>Booking: send customers to Schedulista in a new tab, or embed the widget in an iframe on the site?</td><td>Send to Schedulista &mdash; fewer things to break, better on mobile</td></tr>
+      <tr><td>Gallery photos: uploaded to the CMS, or pulled from Instagram?</td><td>CMS uploads. Instagram needs a Business account and a token that expires.</td></tr>
+      <tr><td>Push notifications for cancellations &mdash; now or later?</td><td>Later</td></tr>
+      <tr><td>Any offers, loyalty or gift vouchers to feature?</td><td>None; the CMS banner field covers it when there are</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="asbuilt">
+  <div class="sec-head"><span class="sec-mark">O</span><h2>As built</h2></div>
+  <p>Everything above is the plan. This section is what the repository actually does, where it went further than the plan, and where the plan was wrong.</p>
+
+  <h3>Nothing in the code knows a barber's name</h3>
+  <p>The plan had <code>content.json</code> holding a category and an order for every service, keyed by Schedulista's ids. That worked, and it had one fatal property: a barber added in Schedulista arrives with ids nobody has ever seen, so every one of their services fell into "More" and the new chair looked broken until somebody edited a JSON file. The shop would have had to ring a developer to hire a barber.</p>
+  <p>So the grouping is derived from the only thing we know about a service we have never met &mdash; its name. <code>classify()</code> in <code>lib/services.ts</code> sorts a name into Haircuts, Beard, Haircut &amp; Beard, Colour or Extras; the owners' overrides still win where they exist, and the override block now ships empty. Against the live list this reproduces the hand-written grouping exactly.</p>
+  <p>Everything else that used to assume two barbers now counts:</p>
+  <ul>
+    <li>One signature service per barber is taken onto the front page <strong>in rotation</strong>, so no barber can be silently left off it.</li>
+    <li>The price list gives each barber a tab. Two share the width; three or more and the row scrolls sideways rather than squeezing names into unreadable columns.</li>
+    <li>With <strong>one</strong> barber the "who would you like?" step disappears from the booking flow and the price list loses its tabs, because there is nothing to choose.</li>
+    <li>"In the chairs: &hellip;", the Book&nbsp;now subtitle, the "all N prices" link and the sheet's footnote are all generated from the live list.</li>
+    <li>The chosen barber on the price list is remembered <strong>by id, not by index</strong>. A barber leaving must not silently switch a regular onto somebody else's prices because the array got shorter.</li>
+  </ul>
+
+  <h3>Live, not nightly</h3>
+  <p>The plan had the sync running three times a day into <code>services.json</code>. That is still there &mdash; it is what gives the first paint real prices with no round trip &mdash; but it is no longer the freshest thing a customer sees. <code>server/catalog.ts</code> re-reads the scheduler page at request time behind a ten-minute cache and serves it from <code>GET /api/services</code>. A barber added at nine is bookable before ten, with no deploy.</p>
+  <p>Both paths run <strong>the same parser</strong>. Two parsers would eventually disagree about what a service is called; the cheerio dependency is gone and the shared parser is plain regex, because it has to bundle for the server runtime as well as for Node.</p>
+  <p>The server's booking whitelist consults the live list too, with the build-time list as the floor: a new pair is accepted without a redeploy, and a scheduler outage cannot lock customers out of services that have not changed.</p>
+
+  <h3>Three months, enforced twice</h3>
+  <p>The calendar pages three months and the arrows stop. That is a courtesy. <code>assertWithinHorizon</code> refuses the same range on the server, because a hand-typed address should not be able to hold a slot next Christmas.</p>
+
+  <h3>The brand arrived after the build</h3>
+  <p>Sections E and F were written from a 200px raster and a guess. The shop then supplied the real artwork &mdash; the circular badge, and a photograph of the front &mdash; and everything downstream of that guess had to be redone.</p>
+  <ul>
+    <li><strong>The palette is black and gold</strong>, and the gold is not chosen but sampled: <code>#C6A43C</code> is the exact value of the lettering on the badge, read off the file, and the two status colours are the rose and its leaves read the same way. The black is a true neutral: the first version carried a little warmth and read as brown next to the gold. Measured on the page ground: cream 17.0:1, goldLift 11.5:1, muted 9.4:1, gold 8.5:1, mutedDim 5.6:1, and gold on a panel 7.9:1. Because gold clears AA at label size, the small capital labels are plain gold; <code>goldLift</code> is reserved for hover and for prices. The budget is written into the header of <code>theme.ts</code>.</li>
+    <li><strong>The button label is the page's own black on gold</strong>, not the reverse. The obvious way round measured 3.2:1 and would have shipped a failing CTA.</li>
+    <li><strong>The display face is LHF Old Tom</strong>, the shop's own, licensed and supplied by the shop, so the type on the page and the lettering on the badge are the same drawing rather than a near miss. Two of its five cuts are loaded: <strong>Plain</strong> for headings, prices, names, addresses and every small capital label, and <strong>Poster Letter</strong>, capitals only, for the shop's name. The layered Poster Full and Poster Highlights pair is in the repository and unused, because the badge does not use the inline effect. Outfit is the text face, a rounded geometric matched to the shop's printed card. Yeseva One, Archivo and the Bodoni Moda stand-in are all gone.</li>
+    <li><strong>One measurement drove a global correction.</strong> Old Tom's capitals are exactly as tall as Outfit's, 71 against 70 at the same point size, but an <code>H</code> is 46.8 units wide against 70.6: it is a third narrower, so at a matched size it covers much less of the line and reads as small type. Every display size goes through <code>dsize()</code>, which scales by 1.3. It is an optical correction, not a change to the scale, and body copy is untouched.</li>
+    <li><strong>The wordmark sizes itself.</strong> The glyphs of "PERRIN'S" in Old Tom Poster Letter measure 3.282&nbsp;ems and the tracking is a fixed number of points on top of that, so <code>Wordmark</code> solves for the size that fits the room it is handed. Folding the tracking into the ems was right at 78pt and 1.4px short at 44pt, which once put an ellipsis in the shop's name on a phone. The front page sizes the badge first and gives the mark the rest, which is why there is no type breakpoint anywhere between a 320px phone and a 1600px desktop.</li>
+    <li><strong>The badge is the artwork as supplied</strong>, transparent, on no plate of ours. The crop is done in the layout instead of to the file: the drawn part covers 416 of the artwork's 640 points, so the image is drawn at <code>size / 0.65</code> and centred, and the size prop means the size the badge appears. Just over half the badge is pure black and therefore invisible against the page; the reverse of it, cream linework instead of black, was built and the shop preferred the original.</li>
+    <li><strong>The front page is a composition, not a stack.</strong> Badge and name locked up across the top, the hashtag under them, a rule, then the introduction against the one gold button, then the hours and the address. The photograph is not on it at all: it lives on Visit, where it is doing a job, and under the badge it only competed with it. On one column the button moves <em>above</em> the introduction, because seven lines of it is most of a phone screen and the thing the page exists for cannot be below that.</li>
+    <li><strong>The barber pole is gone.</strong> It was drawn, then built properly, then removed on the shop's instruction. Its last surviving trace was the favicon, which is now the crossed scissors from behind the badge lettering: two strokes and two rings, legible at 16px where the full badge is a smudge.</li>
+    <li><strong>No long dashes anywhere a customer can read.</strong> Sixty of them came out of the content and the screens, and <code>npm run check:dashes</code> fails the build if one gets back in.</li>
+  </ul>
+
+  <h3>Owner control, extended</h3>
+  <p>Section D promised a CMS for the words. The words were the easy half. <code>content.json</code> now also holds:</p>
+  <div class="tw"><table>
+    <thead><tr><th>Block</th><th>What the owners get</th></tr></thead>
+    <tbody>
+      <tr><td><code>design.palette</code></td><td>Every colour in the product. Nothing else in the codebase holds a hex value, and the hairline rules are derived from the accent, so changing gold changes them too.</td></tr>
+      <tr><td><code>design.corner</code>, <code>design.density</code></td><td>Corner radius from square-signage to modern; a multiplier on every gap and margin.</td></tr>
+      <tr><td><code>layout.home</code></td><td>The order of the blocks down the front page, as a list of names. Move a line to move a block; delete one to remove it.</td></tr>
+      <tr><td><code>booking</code></td><td>How far ahead people may book, how many empty months the calendar will skip, whether text reminders are offered.</td></tr>
+      <tr><td><code>content/legal.json</code></td><td>The privacy policy and the terms, as headings and paragraphs.</td></tr>
+    </tbody>
+  </table></div>
+  <p>Every one of them is read defensively: a bad number is clamped, a misspelled block name is skipped, a missing section falls back to what ships. The people editing this file are barbers, and a saved typo must never take the site down. <strong>OWNERS.md</strong> explains all of it in plain English.</p>
+
+  <h3>Legal</h3>
+  <p><code>/privacy</code> and <code>/terms</code>, reachable from the web footer, from Visit inside the app, and from a link under the Confirm button. They were written to describe <em>what this code actually does</em> &mdash; not copied from another shop: the details go to Schedulista and nowhere else, nothing is written to a database of ours, the only thing stored is on the customer's own device, there are no cookies or analytics or trackers of any kind, and the app asks the phone for network state and nothing else. <code>&#123;phone&#125;</code>, <code>&#123;email&#125;</code>, <code>&#123;address&#125;</code> and <code>&#123;monthsAhead&#125;</code> are substituted from the settings the rest of the app uses, so a policy cannot quote a number that changed elsewhere.</p>
+
+  <h3>Store readiness</h3>
+  <p>The plan listed the logo as blocking submission, and it was: neither store accepts a build without a 1024px icon. That is resolved &mdash; the app icon, the adaptive icon, the splash and the Play icon are all the real badge, at the inset each store needs, and the iOS one is written without an alpha channel because Apple rejects an icon that carries one. <code>scripts/make-icons.mjs</code> survives to draw the favicon and nothing else. <code>app.json</code> carries the iOS privacy manifest, the Android permission block (network state only; camera, location, storage and microphone explicitly blocked), the adaptive icon and the splash configuration. <strong>STORE.md</strong> lists what is in the build and what only a person with the shop's accounts can do.</p>
+
+  <h3>What is still not true</h3>
+  <ul>
+    <li><strong>The final reservation POST has never been run for real.</strong> Every step up to it is verified against the live system, but creating an appointment in a working shop's diary to prove a point is not a thing to do without being asked. One test booking, then cancel it.</li>
+    <li><strong>The font licence needs checking.</strong> LHF Old Tom is in the build. Confirm with Letterhead that the licence covers a website and two app bundles, not only a desktop machine.</li>
+    <li><strong>The gallery does not exist</strong>, on purpose. There are no photographs.</li>
+  </ul>
+</section>
+
+<footer>
+  <p>Perrin's Barber Shop &middot; 5 Old Cross, Hertford &middot; 01992 500010<br>
+  Build specification v1 &middot; verified against <code>perrins1.schedulista.com</code> on 22 August 2026. The service names, prices and IDs quoted here were read from the live page and will drift &mdash; the sync exists precisely so that they can.</p>
+</footer>
+
+</main>
+
+<nav class="rail" aria-label="Contents">
+  <p>Contents</p>
+  <a href="#idea">A &nbsp;The idea</a>
+  <a href="#not">B &nbsp;Not building</a>
+  <a href="#sched">C &nbsp;Schedulista sync</a>
+  <a href="#inline">C2 &nbsp;Inline booking</a>
+  <a href="#owner">D &nbsp;Owner control</a>
+  <a href="#design">E &nbsp;Design system</a>
+  <a href="#screens">F &nbsp;Screens</a>
+  <a href="#web">G &nbsp;Website</a>
+  <a href="#app">H &nbsp;Mobile apps</a>
+  <a href="#repo">I &nbsp;Repo layout</a>
+  <a href="#phases">J &nbsp;Build phases</a>
+  <a href="#qa">K &nbsp;QA</a>
+  <a href="#cost">L &nbsp;Costs</a>
+  <a href="#risk">M &nbsp;Risks</a>
+  <a href="#decide">N &nbsp;Decisions</a>
+  <a href="#asbuilt">O &nbsp;As built</a>
+</nav>
+
+</div>
+</div>

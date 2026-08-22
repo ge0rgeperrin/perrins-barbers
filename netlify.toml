@@ -1,0 +1,37 @@
+# Netlify build and routing. See DEPLOY.md for the whole runbook.
+
+[build]
+  command = "npm run build:web"
+  # The pre-rendered pages and every static asset. Served from the CDN.
+  publish = "dist/client"
+  functions = "netlify/functions"
+
+[build.environment]
+  # Expo SDK 57 needs a modern Node. Pin it rather than inheriting whatever
+  # Netlify's default happens to be this month.
+  NODE_VERSION = "22"
+
+[functions]
+  node_bundler = "esbuild"
+  # The API routes are loaded from disk at request time rather than bundled, so
+  # they have to be shipped alongside the function.
+  included_files = ["dist/server/**"]
+
+# Long cache on fingerprinted assets, none on the HTML. Every file under
+# _expo/static has its content hash in the name, so it can never go stale.
+[[headers]]
+  for = "/_expo/static/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# The booking routes must never be cached: a hold is single use and a slot list
+# is out of date the moment somebody else books.
+[[headers]]
+  for = "/api/*"
+  [headers.values]
+    Cache-Control = "no-store"

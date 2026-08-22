@@ -1,0 +1,57 @@
+name: sync-services
+
+# Pulls prices from Schedulista and commits them. Three times a day is enough:
+# prices change rarely, and the "Run workflow" button below makes a change live
+# in about a minute whenever the shop wants it sooner.
+on:
+  schedule:
+    - cron: '17 5,11,17 * * *' # UTC
+  workflow_dispatch: # the owners' "Sync now" button
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/**'
+      - 'fixtures/**'
+      - '.github/workflows/sync-services.yml'
+
+concurrency:
+  group: sync-services
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          # 24, not 20: the tests are TypeScript run straight through
+          # `node --test`, which needs a Node that strips types on its own.
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      # The tripwire. If Schedulista changed their markup this fails here, and
+      # the job stops before it can overwrite good prices with a bad parse.
+      - name: Check the parser against the saved fixture
+        run: npm test
+
+      - name: Fetch the live price list
+        run: npm run sync
+
+      - name: Commit if anything changed
+        run: |
+          git config user.name  "services-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/services.json assets/services.json
+          if git diff --staged --quiet; then
+            echo "No price changes." >> "$GITHUB_STEP_SUMMARY"
+          else
+            git diff --staged --stat >> "$GITHUB_STEP_SUMMARY"
+            git commit -m "chore: sync Schedulista services"
+            git push
+          fi
