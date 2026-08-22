@@ -128,9 +128,14 @@ export function BookingSheet() {
   /**
    * The drag, on a phone only.
    *
-   * `activeOffsetY([-12, 12])` is what stops this fighting the scroll views
-   * inside the sheet: the pan only takes over once a finger has committed to a
-   * vertical movement, so flicking through the times list still scrolls.
+   * It is attached to the grab area at the top of the sheet, not to the panel,
+   * so a swipe over the calendar, the times list or the form scrolls that
+   * content and never dismisses the booking.
+   *
+   * `activeOffsetY([-12, 12])` still earns its place: the header holds the back
+   * and close buttons, and the pan must not swallow a tap on either. Twelve
+   * pixels of vertical travel is more than a tap and less than a deliberate
+   * pull.
    *
    * Release is decided by distance OR velocity, not distance alone. Requiring a
    * long drag makes a sheet feel stuck; a quick flick downward is a perfectly
@@ -182,10 +187,25 @@ export function BookingSheet() {
           { opacity: presence, transform: [{ translateY: panelShift }] },
         ]}
       >
-        {/* The handle is not decoration. It is the only thing that says this
-            panel can be pulled, and without it drag-to-dismiss is a secret. */}
-        {!wide ? <View style={styles.grabber} /> : null}
-        <Header />
+        {/* The grab area: the handle plus the header, and nothing below it.
+
+            The handle is not decoration. It is the only thing that says this
+            panel can be pulled, and without it drag-to-dismiss is a secret.
+
+            The detector sits here rather than around the whole panel because
+            a sheet that closes when you swipe anywhere is a sheet that closes
+            by accident: every downward flick over the calendar, the times or
+            the form was throwing the booking away mid-way through it. */}
+        {wide ? (
+          <Header />
+        ) : (
+          <GestureDetector gesture={pan}>
+            <View style={styles.grabArea}>
+              <View style={styles.grabber} />
+              <Header />
+            </View>
+          </GestureDetector>
+        )}
         <Progress />
         <StepBody />
       </Animated.View>
@@ -208,7 +228,7 @@ export function BookingSheet() {
         style={[styles.centre, wide && styles.centreWide]}
         pointerEvents="box-none"
       >
-        {wide ? panel : <GestureDetector gesture={pan}>{panel}</GestureDetector>}
+        {panel}
       </KeyboardAvoidingView>
     </View>
   );
@@ -402,6 +422,10 @@ const styles = StyleSheet.create({
     marginTop: space.sm,
     marginBottom: space.xs,
   },
+
+  // Everything you can pull the sheet down by. Full width so the target is
+  // the whole top of the sheet rather than the 36px of the handle itself.
+  grabArea: { width: '100%' },
 
   panel: {
     width: '100%',
