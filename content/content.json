@@ -20,7 +20,7 @@
   "_hoursNote": "Confirmed from the Google Business Profile, August 2026. 24-hour times. Set \"closed\": true for a day the shop does not open. day 0 is Sunday.",
   "hours": [
     { "day": 0, "opens": "10:00", "closes": "14:00" },
-    { "day": 1, "opens": "", "closes": "", "closed": true },
+    { "day": 1, "opens": "09:00", "closes": "18:00" },
     { "day": 2, "opens": "09:00", "closes": "18:00" },
     { "day": 3, "opens": "09:00", "closes": "20:00" },
     { "day": 4, "opens": "09:00", "closes": "18:00" },

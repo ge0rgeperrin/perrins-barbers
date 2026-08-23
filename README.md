@@ -42,7 +42,7 @@ Two files, both with a note above every section explaining what it does:
 | **How far ahead people can book** | `booking.monthsAhead` |
 | The privacy policy and the terms | `content/legal.json` |
 
-Opening hours are the ones from the Google Business Profile: closed Mondays,
+Opening hours are the ones from the Google Business Profile: open seven days,
 late on Wednesdays and Fridays, 08:00 starts on Saturdays. The sentence on the
 Visit screen that describes the week is generated from those numbers, so it can
 never contradict the table.
