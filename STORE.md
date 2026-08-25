@@ -190,13 +190,29 @@ app rather than the website proves both at once.
 Apple wants a **6.9 inch iPhone set: 1290x2796** portrait. 1320x2868 is also
 accepted. There is no iPad set to produce any more.
 
-No simulator on Windows, so these come off the real phone, and unless that phone
-is a Pro Max its screenshots come out smaller: 1179x2556 on a 15, 16 or Pro,
-1170x2532 on a 14. The aspect ratio is within a rounding error of the target, so
-this is a plain resize rather than a crop and pad job. Open each in Windows
-Photos, resize to exactly 1290x2796, save.
+**Done. Four of them are in `assets/store/ios`,** numbered in the order they
+should be uploaded: Home, the price list, Visit, and the opening hours.
 
-Four is plenty: Home, Prices, the calendar mid-booking, the confirmation.
+They came off an iPhone 16 Pro, which shoots 1206x2622, and they had been
+trimmed before I saw them, so the four arrived at 1206 wide and three different
+heights. An earlier version of this note guessed the aspect ratio would be close
+enough for a plain resize. It was not: Apple's frame is proportionally taller
+than any of them, so filling it would have cropped 43 pixels off each side and
+clipped the text.
+
+They are padded into the frame instead, with the colour sampled from each
+image's own top edge, which on a screen this dark joins the picture invisibly
+rather than at a step. To redo them after a change, the same recipe as the
+icons, `@expo/image-utils`, with `resizeMode: 'contain'` and that sampled colour
+as the background.
+
+If you retake them, **do not trim them**. A whole 1206x2622 capture is almost
+exactly Apple's ratio and needs nothing but a scale.
+
+**One still worth adding: the booking flow.** These four show the shop, not the
+thing the app does. Apple's 4.2 Minimum Functionality is the guideline this app
+has to answer, and a picture of the calendar with real times on it answers it
+better than the review notes can.
 
 
 #### 6. The App Store Connect record
