@@ -132,7 +132,12 @@ function BarberTabs({
         <Text style={[styles.tabName, active && styles.tabNameActive]} numberOfLines={1}>
           {provider.name}
         </Text>
-        <Text style={[styles.tabRole, active && styles.tabRoleActive]} numberOfLines={1}>
+        {/* Two lines, not one.
+            On the web these tabs are wide and the whole line fits. On a phone
+            with two barbers each tab is half the screen, and one line meant
+            "Senior Barber, from..." with the price, the only number on the
+            line worth reading, cut off by the ellipsis. Wrapping keeps it. */}
+        <Text style={[styles.tabRole, active && styles.tabRoleActive]} numberOfLines={2}>
           {[provider.role, from === null ? null : `from ${money(from)}`].filter(Boolean).join(' · ')}
         </Text>
       </Pressable>

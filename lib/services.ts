@@ -22,9 +22,10 @@ import { apiOrigin } from './site.ts';
 
 /**
  * Our own API route, which re-reads the scheduler on a short cache. Relative in
- * a browser, absolute on a phone. See lib/site.ts.
+ * a browser, absolute on a phone. lib/site.ts decides which, once, for both
+ * this and the booking calls.
  */
-export const SERVICES_URL = `${apiOrigin(typeof window !== 'undefined' && !!window.location)}/api/services`;
+export const SERVICES_URL = `${apiOrigin()}/api/services`;
 
 export type Service = {
   id: string;

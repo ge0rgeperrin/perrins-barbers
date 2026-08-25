@@ -8,6 +8,7 @@
  */
 import { useEffect, useRef } from 'react';
 import { Animated, Pressable, StyleSheet, Text, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { color, font, radius, size, space, TAP } from '../theme';
 import { NATIVE_DRIVER, useReducedMotion } from '../lib/motion';
 import { Logo } from './Logo';
@@ -22,6 +23,11 @@ type Props = {
 export function WaitingScreen({ online, onRetry }: Props) {
   const checking = online === null;
   const reduced = useReducedMotion();
+  // This screen renders before either shell, so nothing above it has cleared
+  // the status bar or the home indicator on its behalf. It is also the very
+  // first thing the app ever shows, which is a poor place to have the footer
+  // sitting under the home bar.
+  const insets = useSafeAreaInsets();
   const fade = useRef(new Animated.Value(reduced ? 1 : 0.45)).current;
 
   useEffect(() => {
@@ -40,7 +46,7 @@ export function WaitingScreen({ online, onRetry }: Props) {
   }, [fade, reduced]);
 
   return (
-    <View style={styles.screen}>
+    <View style={[styles.screen, { paddingTop: insets.top, paddingBottom: insets.bottom }]}>
       <View style={styles.middle}>
         {/* The badge rather than the shop name in type. This screen is the one
             place a customer is stuck looking at nothing, so it may as well be

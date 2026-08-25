@@ -7,9 +7,12 @@
  * cannot end up quoting a phone number or a booking horizon that changed months
  * ago somewhere else.
  */
-import { StyleSheet, Text, View } from 'react-native';
-import { color, display, dsize, font, size, space } from '../theme';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useRouter } from 'expo-router';
+import Feather from '@expo/vector-icons/Feather';
+import { color, display, dsize, font, radius, size, space, TAP } from '../theme';
 import { Screen } from '../components/ui';
+import { IS_APP } from './Phone';
 import { PageHead } from './PageHead';
 import { addressLine, booking, business } from '../lib/content';
 import { countWord } from '../lib/services';
@@ -42,6 +45,8 @@ export function LegalScreen({ which, path }: { which: 'privacy' | 'terms'; path:
         description={fill(doc.intro)}
         path={path}
       />
+
+      <BackToWhereYouWere />
 
       <View style={styles.head}>
         <Text style={styles.title} accessibilityRole="header">
@@ -77,8 +82,60 @@ export function LegalScreen({ which, path }: { which: 'privacy' | 'terms'; path:
   );
 }
 
+/**
+ * The way out, on the app only.
+ *
+ * Privacy and Terms are tab routes with no tab and no header, which means the
+ * app draws no back control of its own. Android has a hardware back key and the
+ * web has the browser's, so on both of those this page has always had an exit.
+ * iOS has neither, and the route people actually arrive by is the worst one to
+ * strand them on: the link inside the booking form closes the sheet first, so a
+ * customer who wanted to know where their phone number was going was left on a
+ * policy page with their half-finished booking gone and nothing to press.
+ *
+ * `canGoBack` is not decoration either. These are real URLs on the web and a
+ * deep link on the phone, so this page can legitimately be the first thing in
+ * the history; Visit is where the legal links live, so that is where an
+ * otherwise-empty back stack goes.
+ */
+function BackToWhereYouWere() {
+  const router = useRouter();
+  if (!IS_APP) return null;
+
+  return (
+    <Pressable
+      onPress={() => (router.canGoBack() ? router.back() : router.replace('/visit'))}
+      accessibilityRole="button"
+      accessibilityLabel="Back"
+      hitSlop={8}
+      style={({ pressed }) => [styles.back, pressed && styles.backPressed]}
+    >
+      <Feather name="chevron-left" size={18} color={color.gold} />
+      <Text style={styles.backLabel}>Back</Text>
+    </Pressable>
+  );
+}
+
 const styles = StyleSheet.create({
-  head: { paddingTop: space.xxl, paddingBottom: space.lg, gap: space.sm },
+  back: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    alignSelf: 'flex-start',
+    gap: space.xs,
+    minHeight: TAP,
+    paddingRight: space.md,
+    borderRadius: radius.card,
+    marginTop: space.base,
+  },
+  backPressed: { opacity: 0.6 },
+  backLabel: {
+    fontFamily: font.semibold,
+    fontSize: size.caption,
+    letterSpacing: 0.6,
+    color: color.gold,
+  },
+
+  head: { paddingTop: space.lg, paddingBottom: space.lg, gap: space.sm },
   title: {
     ...display,
     fontSize: dsize(size.h2),

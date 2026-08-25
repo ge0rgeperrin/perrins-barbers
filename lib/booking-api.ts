@@ -2,7 +2,6 @@
  * The client half of the booking proxy. Nothing here knows Schedulista exists;
  * it only talks to our own /api/booking routes.
  */
-import { Platform } from 'react-native';
 import { monthBounds } from './calendar';
 import { apiOrigin } from './site';
 
@@ -72,7 +71,7 @@ export class BookingError extends Error {
  * On the web the API is same-origin. A phone has to be told where the site is.
  * See lib/site.ts.
  */
-const ORIGIN = apiOrigin(Platform.OS === 'web');
+const ORIGIN = apiOrigin();
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
   let res: Response;

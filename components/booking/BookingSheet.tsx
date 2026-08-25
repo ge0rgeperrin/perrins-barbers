@@ -20,9 +20,12 @@
  *      never runs leaves a full-screen invisible panel over the page and a
  *      button that reads as dead. Visibility and unmount are settled by a timer.
  *
- *   2. `flex: 0` never sizes the panel. In React Native it means flexBasis 0, so
- *      a panel that sizes to its contents collapses to the two hairlines of its
- *      own border. See panelWide.
+ *   2. A flexBasis of 0 never sizes the panel. In React Native both `flex: 0`
+ *      and `flex: 1` set flexBasis to 0, and a basis of 0 inside a parent that
+ *      sizes to its contents contributes no height, so the panel collapses. It
+ *      has now happened twice: once to the desktop dialog, see panelWide, and
+ *      once to the phone sheet, see dragLayerPhone. Before changing any flex
+ *      value in this file, ask what sizes the parent.
  */
 import { useEffect, useRef, useState } from 'react';
 import {
@@ -172,7 +175,7 @@ export function BookingSheet() {
   });
 
   const panel = (
-    <ReAnimated.View style={[styles.dragLayer, dragStyle]}>
+    <ReAnimated.View style={[styles.dragLayer, !wide && styles.dragLayerPhone, dragStyle]}>
       <Animated.View
         // accessibilityViewIsModal is iOS only; role and aria-modal are what a
         // browser and a screen reader on Android actually read.
@@ -409,7 +412,24 @@ const styles = StyleSheet.create({
 
   // The layer the finger moves. Separate from the panel so the drag transform
   // and the entrance transform never have to share one style object.
+  //
+  // Content-sized on purpose, because that is what a centred desktop dialog
+  // needs: panelWide has a basis of `auto` and a maxHeight, and this layer has
+  // to be free to be exactly as tall as that.
   dragLayer: { width: '100%', alignItems: 'center', flexShrink: 1 },
+
+  // On a phone it has to fill instead, and this is rule 2 at the top of the
+  // file catching the same file out a second time.
+  //
+  // The phone sheet is full height: it pads for the status bar at the top and
+  // the home indicator at the bottom, and `panel` asks for `flex: 1`. But
+  // `flex: 1` is flexBasis 0, and a basis of 0 inside a parent that sizes to
+  // its contents contributes no height at all. So the layer measured zero, the
+  // panel had nothing to grow into, and the whole booking flow spilled out of
+  // the bottom of the screen with only a strip of it visible. Exactly the
+  // failure described under panelWide, on the other branch of the same
+  // ternary, and it survived because the desktop was the only thing ever run.
+  dragLayerPhone: { flex: 1 },
 
   // The pull handle. Small, centred, gold at low alpha so it reads as part of
   // the sheet's edge rather than as a control in its own right.
