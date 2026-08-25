@@ -5,6 +5,7 @@
 import { useEffect } from 'react';
 import { Platform, Pressable, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import Feather from '@expo/vector-icons/Feather';
 import { Slot, Tabs, usePathname, useRouter } from 'expo-router';
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
@@ -28,7 +29,7 @@ import { color, font, label, maxContentWidth, radius, size, space, TAB_BAR_HEIGH
 import { AppStateProvider, useAppState } from '../lib/app-state';
 import { BookingProvider, useBooking } from '../lib/booking';
 import { WaitingScreen } from '../components/WaitingScreen';
-import { TabBarBackground, TabBarIcon } from '../components/TabBarBackground';
+import { TabBarBackground } from '../components/TabBarBackground';
 import { BookingSheet } from '../components/booking/BookingSheet';
 import { Logo } from '../components/Logo';
 import { Wordmark } from '../components/Wordmark';
@@ -150,13 +151,8 @@ function PhoneTabs() {
             name={tab.name}
             options={{
               title: tab.title,
-              tabBarIcon: ({ focused, color: tint, size: iconSize }) => (
-                <TabBarIcon
-                  name={tab.icon}
-                  focused={focused}
-                  color={tint}
-                  size={iconSize - 2}
-                />
+              tabBarIcon: ({ color: tint, size: iconSize }) => (
+                <Feather name={tab.icon} size={iconSize - 2} color={tint} />
               ),
             }}
           />
