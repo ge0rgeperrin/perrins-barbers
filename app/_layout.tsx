@@ -10,21 +10,25 @@ import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-cont
 import { StatusBar } from 'expo-status-bar';
 import * as SplashScreen from 'expo-splash-screen';
 import { useFonts } from 'expo-font';
-import Feather from '@expo/vector-icons/Feather';
-import {
-  BodoniModa_700Bold,
-  BodoniModa_900Black,
-} from '@expo-google-fonts/bodoni-moda';
-import {
-  Outfit_400Regular,
-  Outfit_500Medium,
-  Outfit_600SemiBold,
-} from '@expo-google-fonts/outfit';
+// Imported one weight at a time, from the weight's own subpath.
+//
+// The package root is the documented import and it is the expensive one: its
+// index.js `require`s every cut in the family, and a `require` of an asset is
+// not something Metro can shake out. Importing the two Bodonis and the three
+// Outfits from the root shipped twenty-one font files in the bundle to load
+// five of them, about 940KB of type nobody can see, in every download of both
+// apps. Each subpath requires exactly its own file.
+import { BodoniModa_700Bold } from '@expo-google-fonts/bodoni-moda/700Bold';
+import { BodoniModa_900Black } from '@expo-google-fonts/bodoni-moda/900Black';
+import { Outfit_400Regular } from '@expo-google-fonts/outfit/400Regular';
+import { Outfit_500Medium } from '@expo-google-fonts/outfit/500Medium';
+import { Outfit_600SemiBold } from '@expo-google-fonts/outfit/600SemiBold';
 
-import { color, font, label, maxContentWidth, radius, size, space, TAP } from '../theme';
+import { color, font, label, maxContentWidth, radius, size, space, TAB_BAR_HEIGHT, TAP } from '../theme';
 import { AppStateProvider, useAppState } from '../lib/app-state';
 import { BookingProvider, useBooking } from '../lib/booking';
 import { WaitingScreen } from '../components/WaitingScreen';
+import { TabBarBackground, TabBarIcon } from '../components/TabBarBackground';
 import { BookingSheet } from '../components/booking/BookingSheet';
 import { Logo } from '../components/Logo';
 import { Wordmark } from '../components/Wordmark';
@@ -107,8 +111,17 @@ function Banner() {
 }
 
 function PhoneTabs() {
+  // The status bar is ours to clear.
+  //
+  // Bottom tabs hands the safe-area insets to the tab bar and to nothing else,
+  // and every screen here sets headerShown: false — so without this the top of
+  // Home sits under the clock and, on any phone that has one, behind the
+  // Dynamic Island. WebShell has always padded for this; the phone never did,
+  // because until now the phone had never been run.
+  const insets = useSafeAreaInsets();
+
   return (
-    <View style={styles.fill}>
+    <View style={[styles.fill, { paddingTop: insets.top }]}>
       <Banner />
       <Tabs
         screenOptions={{
@@ -116,8 +129,19 @@ function PhoneTabs() {
           sceneStyle: { backgroundColor: color.ink },
           tabBarActiveTintColor: color.gold,
           tabBarInactiveTintColor: color.mutedDim,
-          tabBarStyle: styles.tabBar,
           tabBarLabelStyle: styles.tabLabel,
+          // The bar floats over the page rather than sitting under it, so the
+          // content runs beneath the glass and the material has something to
+          // refract. See components/TabBarBackground.
+          //
+          // The height is set rather than left to React Navigation because
+          // Screen in components/ui has to leave exactly this much room at the
+          // end of every scroll, and the two numbers have to be the same one.
+          tabBarStyle: [
+            styles.tabBar,
+            { height: TAB_BAR_HEIGHT + insets.bottom, paddingBottom: insets.bottom },
+          ],
+          tabBarBackground: () => <TabBarBackground />,
         }}
       >
         {TABS.map((tab) => (
@@ -126,8 +150,13 @@ function PhoneTabs() {
             name={tab.name}
             options={{
               title: tab.title,
-              tabBarIcon: ({ color: tint, size: iconSize }) => (
-                <Feather name={tab.icon} size={iconSize - 2} color={tint} />
+              tabBarIcon: ({ focused, color: tint, size: iconSize }) => (
+                <TabBarIcon
+                  name={tab.icon}
+                  focused={focused}
+                  color={tint}
+                  size={iconSize - 2}
+                />
               ),
             }}
           />
@@ -293,10 +322,17 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 
+  // Transparent and borderless: everything visible about this bar is drawn by
+  // TabBarBackground, including the hairline, which only appears in the solid
+  // fallback. A border on top of glass reads as a seam.
   tabBar: {
-    backgroundColor: color.ink,
-    borderTopColor: color.line,
-    borderTopWidth: StyleSheet.hairlineWidth,
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'transparent',
+    borderTopWidth: 0,
+    elevation: 0,
   },
   tabLabel: {
     fontFamily: font.semibold,

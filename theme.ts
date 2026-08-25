@@ -286,3 +286,20 @@ export const maxContentWidth = 1040;
 
 /** Smallest comfortable tap target. Nothing pressable may be shorter. */
 export const TAP = 44;
+
+/**
+ * The height of the phone's tab bar, above the home indicator.
+ *
+ * It is a constant rather than a measurement because two separate things have
+ * to agree on it: the bar draws itself this tall, and every screen leaves this
+ * much room at the end of its scroll so the last line of content is not sitting
+ * behind the glass. React Navigation does publish the real height through
+ * BottomTabBarHeightContext, but only from inside expo-router's bundled copy of
+ * it, and reaching into another package's build directory to read one number is
+ * a thing that breaks on a version bump.
+ *
+ * 56 rather than the system's 49: the bar floats clear of the screen edge now,
+ * and a little more height is what lets the material read as a surface in its
+ * own right instead of a strip stuck to the bottom.
+ */
+export const TAB_BAR_HEIGHT = 56;

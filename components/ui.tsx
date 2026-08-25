@@ -14,6 +14,7 @@ import {
 import {
   Animated,
   Dimensions,
+  Platform,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -25,7 +26,7 @@ import {
   type ViewStyle,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { color, display, dsize, font, label, maxContentWidth, radius, size, space } from '../theme';
+import { color, display, dsize, font, label, maxContentWidth, radius, size, space, TAB_BAR_HEIGHT } from '../theme';
 import { duration, easeOut, isReducedMotion, NATIVE_DRIVER, travel } from '../lib/motion';
 
 /* ------------------------------------------------------------------ */
@@ -97,7 +98,20 @@ export function Screen({
     <ScrollWatch.Provider value={api}>
       <ScrollView
         style={styles.screen}
-        contentContainerStyle={[styles.screenContent, { paddingBottom: space.huge + insets.bottom }]}
+        // Room at the end for the tab bar, which floats over the page rather
+        // than sitting below it, so the last line of content would otherwise
+        // finish underneath the glass. The bar's own height plus the home
+        // indicator, and then space.huge on top of that, which is the same
+        // trailing gap the page had before the bar started floating.
+        //
+        // There is no tab bar on the web, where the shell is a header.
+        contentContainerStyle={[
+          styles.screenContent,
+          {
+            paddingBottom:
+              space.huge + insets.bottom + (Platform.OS === 'web' ? 0 : TAB_BAR_HEIGHT),
+          },
+        ]}
         showsVerticalScrollIndicator={false}
         scrollEventThrottle={32}
         onLayout={(event) => {
