@@ -8,15 +8,13 @@
     "userInterfaceStyle": "dark",
     "backgroundColor": "#0C0B08",
     "primaryColor": "#C9A227",
-    "newArchEnabled": true,
     "icon": "./assets/icon.png",
     "runtimeVersion": {
       "policy": "appVersion"
     },
     "ios": {
-      "supportsTablet": true,
+      "supportsTablet": false,
       "bundleIdentifier": "uk.co.perrinsbarbers.app",
-      "buildNumber": "1",
       "infoPlist": {
         "CFBundleDisplayName": "Perrin's",
         "ITSAppUsesNonExemptEncryption": false
@@ -58,12 +56,14 @@
             ]
           }
         ]
+      },
+      "icon": {
+        "light": "./assets/icon-light.png",
+        "dark": "./assets/icon-dark.png"
       }
     },
     "android": {
       "package": "uk.co.perrinsbarbers.app",
-      "versionCode": 1,
-      "edgeToEdgeEnabled": true,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
@@ -91,7 +91,12 @@
       "description": "The Hertford Barber. Traditional barbering on Old Cross in Hertford since 1999. Prices, opening hours and online booking."
     },
     "plugins": [
-      "expo-router",
+      [
+        "expo-router",
+        {
+          "origin": "https://perrinsbarbers.co.uk"
+        }
+      ],
       "expo-font",
       "expo-web-browser",
       "expo-status-bar",
@@ -110,7 +115,15 @@
       "typedRoutes": true
     },
     "extra": {
-      "_note": "eas.projectId is written here by `eas init`. See STORE.md."
+      "_note": "eas.projectId identifies this app to EAS Build. Written by `eas init`, safe to commit, not a secret. See STORE.md.",
+      "router": {},
+      "eas": {
+        "projectId": "75cf3e60-4715-4ae1-b1c9-2712a37fc45f"
+      }
+    },
+    "owner": "ge0rgeperrin",
+    "updates": {
+      "url": "https://u.expo.dev/75cf3e60-4715-4ae1-b1c9-2712a37fc45f"
     }
   }
 }

@@ -1,0 +1,72 @@
+name: publish-update
+
+# Pushes a content or code change to the phone apps without a new build.
+#
+# WHY THIS EXISTS. The website re-reads content/content.json on every deploy, so
+# an opening-hours edit is live in two minutes. The phone apps cannot do that:
+# content.json is bundled into the binary when the app is built. Without this
+# workflow, a bank holiday closure would show on the website and not in the app
+# until somebody shipped a new build through App Store review, which is days.
+#
+# WHAT IT CANNOT DO. An update carries JavaScript and assets. It cannot carry
+# native code. If a change adds or upgrades a native dependency, or edits
+# app.json, the phones need a real build instead, which is why neither
+# package.json nor app.json is in the paths below: a change to those must not
+# quietly publish a JavaScript bundle that the installed native code cannot run.
+#
+# Prices are deliberately absent too. They are fetched live from /api/services
+# at runtime, so a price change already reaches the app within minutes without
+# anything being published at all.
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'content/**'
+      - 'app/**'
+      - 'components/**'
+      - 'lib/**'
+      - 'theme.ts'
+      - '.github/workflows/publish-update.yml'
+  workflow_dispatch: # a "push it now" button
+
+concurrency:
+  group: publish-update
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          # 24, for the same reason as sync-services: the tests are TypeScript
+          # run straight through `node --test`.
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      # The tripwire, same as the price sync. A broken bundle published over the
+      # air reaches every phone at once and cannot be recalled as easily as a
+      # bad deploy, so nothing ships past a failing test.
+      - name: Tests and types
+        run: |
+          npm test
+          npx tsc --noEmit
+
+      - uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      # The commit message goes in through the environment, never straight into
+      # the run block. A `run:` that interpolates ${{ }} from a commit message
+      # hands whoever wrote that message a shell on the runner, and the runner
+      # is holding EXPO_TOKEN.
+      - name: Publish to the production channel
+        env:
+          EXPO_PUBLIC_SITE_URL: https://perrinsbarbers.co.uk
+          UPDATE_MESSAGE: ${{ github.event.head_commit.message || 'manual publish' }}
+        run: eas update --branch production --message "$UPDATE_MESSAGE" --non-interactive
