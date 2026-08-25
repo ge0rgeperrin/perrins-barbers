@@ -21,6 +21,11 @@ their own, see [Barbers and prices](#barbers-and-prices) below.
 2. Any line whose name starts with an underscore (`_readme`, `_hoursNote`) is a
    note to you. It does nothing. Leave it or delete it, whichever you prefer.
 3. Save the file, commit it, and the site rebuilds itself. Nothing else to do.
+   The iPhone and Android apps update themselves too, a minute or two behind the
+   website, and nobody has to go to the app stores for it. Anyone who already
+   has the app sees the change next time they open it. The one thing that does
+   still need a new app, and a wait of a day or two for Apple, is a change a
+   developer makes to the app's own workings, never anything in these files.
 4. If you break something, every setting has a safe fallback, a bad number or a
    misspelled block name is ignored rather than taking the site down.
 
