@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-30T10:30:26.550Z",
+  "fetchedAt": "2026-08-30T15:22:26.227Z",
   "source": "https://perrins1.schedulista.com/",
   "providers": [
     {
@@ -193,6 +193,22 @@
           "note": null,
           "description": "",
           "bookingUrl": "https://www.schedulista.com/schedule/perrins1/choose_time?provider_id=1074024184&service_id=1074670528"
+        }
+      ]
+    },
+    {
+      "id": "1074024750",
+      "name": "Charlie",
+      "role": "Apprentice",
+      "services": [
+        {
+          "id": "1074672407",
+          "name": "Apprentice - Free Haircut",
+          "priceGBP": null,
+          "priceLabel": "",
+          "note": null,
+          "description": "",
+          "bookingUrl": "https://www.schedulista.com/schedule/perrins1/choose_time?provider_id=1074024750&service_id=1074672407"
         }
       ]
     }
